@@ -1,9 +1,16 @@
-# Tasks (in Bluestacks)
-- Coordinates for 1-4, 2-2, 2-4, 3-2, 3-4, 4-2, Chapter 3 SOS
-- Access SOS missions (for Chapter 3)
+# Done
+- Coordinates for 1-4, 2-2, 2-4, 3-2, 3-4
 - Get from main menu to Campaign
 - Exit, go from Campaign to main menu
-- Set Fleet 1, 2, 3
+- Set surface fleets for slot 1
+- Clear surface fleet 2
+- Quick Retire for Rare and Common ships
+- Send keyboard events using Win32 API
+- Basic command line interface
+
+# Tasks (in Bluestacks)
+- Coordinates for 4-2, Chapter 3 SOS
+- Access SOS missions (for Chapter 3)
 
 # Tasks (in Python)
-- Send keyboard events using Win32 API
+- Automatically switch to Bluestacks window
