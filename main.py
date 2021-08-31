@@ -94,6 +94,7 @@ def repeat_stage_24(fleet, iterations):
 def repeat_stage_32(fleet, iterations):
     enterCampaignMode()
     KeyPress('N')
+    KeyPress('N')
     TwoKeyCombo('LSHIFT', '4')
     enterFleetSelection()
     clearSecondSurfaceFleet()
@@ -106,6 +107,7 @@ def repeat_stage_32(fleet, iterations):
 
 def repeat_stage_34(fleet, iterations):
     enterCampaignMode()
+    KeyPress('N')
     KeyPress('N')
     TwoKeyCombo('LSHIFT', '5')
     enterFleetSelection()
