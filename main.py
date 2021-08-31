@@ -95,6 +95,9 @@ def repeat_stage_24(fleet, iterations):
     repeatStage(remainingIterations, timebox)
     returnToMainMenu()    
 
+# Stage 3-2 can have up to 6 battles as the boss can be blocked
+# by up to 2 escort fleets
+
 def repeat_stage_32(fleet, iterations):
     enterCampaignMode()
     goToChapter(3)

@@ -1,4 +1,6 @@
 # adapted from https://www.reddit.com/r/learnpython/comments/22tke1/use_python_to_send_keystrokes_to_games_in_windows/
+# NOTE: only supports Win32 API!
+# Consider using PyAutoGUI where cross-platform support is needed!
 
 import ctypes, time
 # Bunch of stuff so that the script can send keystrokes to game #
