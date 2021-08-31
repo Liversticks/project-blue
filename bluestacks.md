@@ -20,3 +20,6 @@
 - 3: Choose fleet 3 (surface 1)
 - Ctrl + G: Go from fleet selection to the actual stage
 - Ctrl + C: Continue same stage
+
+## Main Menu Tasks
+- R: Quick Retire

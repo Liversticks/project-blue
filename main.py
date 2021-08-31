@@ -150,6 +150,8 @@ def main(stage, fleet, iterations):
             repeat_stage_32(fleet, iterations)
         elif stage == '3-4':
             repeat_stage_34(fleet, iterations)
+        # Quick Retire
+        KeyPress('R')
     
 if __name__ == '__main__':
     try:
