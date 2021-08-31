@@ -91,11 +91,39 @@ def repeat_stage_24(fleet, iterations):
     repeatStage(remainingIterations, timebox)
     returnToMainMenu()    
 
+def repeat_stage_32(fleet, iterations):
+    enterCampaignMode()
+    KeyPress('N')
+    TwoKeyCombo('LSHIFT', '4')
+    enterFleetSelection()
+    clearSecondSurfaceFleet()
+    selectFirstSurfaceFleet(fleet)
+    timebox = 9 * 60
+    time.sleep(timebox)
+    remainingIterations = int(iterations) - 1
+    repeatStage(remainingIterations, timebox)
+    returnToMainMenu()    
+
+def repeat_stage_34(fleet, iterations):
+    enterCampaignMode()
+    KeyPress('N')
+    TwoKeyCombo('LSHIFT', '5')
+    enterFleetSelection()
+    clearSecondSurfaceFleet()
+    selectFirstSurfaceFleet(fleet)
+    timebox = 7.5 * 60
+    time.sleep(timebox)
+    remainingIterations = int(iterations) - 1
+    repeatStage(remainingIterations, timebox)
+    returnToMainMenu()    
+
 supportedStages = [
     '1-4',
     '2-2',
     '2-3',
-    '2-4'
+    '2-4',
+    '3-2',
+    '3-4'
 ]
 
 def printSupportedStages():
@@ -116,6 +144,10 @@ def main(stage, fleet, iterations):
             repeat_stage_23(fleet, iterations)
         elif stage == '2-4':
             repeat_stage_24(fleet, iterations)
+        elif stage == '3-2':
+            repeat_stage_32(fleet, iterations)
+        elif stage == '3-4':
+            repeat_stage_34(fleet, iterations)
     
 if __name__ == '__main__':
     try:
