@@ -12,10 +12,17 @@ def enterCampaignMode():
     # Time it takes to change to the correct window - can remove in future
     time.sleep(10)
     KeyPress('M')
+    time.sleep(1)
     TwoKeyCombo('LSHIFT', 'R')
+    time.sleep(3)
 
-def selectFleet(fleet):
+def enterFleetSelection():
     KeyPress('G')
+
+def clearSecondSurfaceFleet():
+    KeyPress('2')
+
+def selectFirstSurfaceFleet(fleet):
     KeyPress('C')
     KeyPress(fleet)
     TwoKeyCombo('LCTRL', 'G')
@@ -33,11 +40,12 @@ def returnToMainMenu():
 def repeat_stage_14(fleet, iterations):
     enterCampaignMode()
     TwoKeyCombo('LSHIFT', '1')
-    selectFleet(fleet)
+    enterFleetSelection()
+    selectFirstSurfaceFleet(fleet)
     timebox = 5 * 60
     time.sleep(timebox)
     remainingIterations = int(iterations) - 1
-    repeatStage(remainingIterations)
+    repeatStage(remainingIterations, timebox)
     returnToMainMenu()
 
 # Chapter 2 maps require 3 battles to make the boss appear
@@ -48,33 +56,39 @@ def repeat_stage_22(fleet, iterations):
     enterCampaignMode()
     KeyPress('N')
     TwoKeyCombo('LSHIFT', '1')
-    selectFleet(fleet)
+    enterFleetSelection()
+    clearSecondSurfaceFleet()
+    selectFirstSurfaceFleet(fleet)
     timebox = 7.5 * 60
     time.sleep(timebox)
     remainingIterations = int(iterations) - 1
-    repeatStage(remainingIterations)
+    repeatStage(remainingIterations, timebox)
     returnToMainMenu()
 
 def repeat_stage_23(fleet, iterations):
     enterCampaignMode()
     KeyPress('N')
     TwoKeyCombo('LSHIFT', '2')
-    selectFleet(fleet)
+    enterFleetSelection()
+    clearSecondSurfaceFleet()
+    selectFirstSurfaceFleet(fleet)
     timebox = 7.5 * 60
     time.sleep(timebox)
     remainingIterations = int(iterations) - 1
-    repeatStage(remainingIterations)
+    repeatStage(remainingIterations, timebox)
     returnToMainMenu()
 
 def repeat_stage_24(fleet, iterations):
     enterCampaignMode()
     KeyPress('N')
     TwoKeyCombo('LSHIFT', '3')
-    selectFleet(fleet)
+    enterFleetSelection()
+    clearSecondSurfaceFleet()
+    selectFirstSurfaceFleet(fleet)
     timebox = 7.5 * 60
     time.sleep(timebox)
     remainingIterations = int(iterations) - 1
-    repeatStage(remainingIterations)
+    repeatStage(remainingIterations, timebox)
     returnToMainMenu()    
 
 supportedStages = [
