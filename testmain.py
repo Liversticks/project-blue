@@ -1,5 +1,5 @@
-from inputKeys import *
-import sys
+from inputKeys import KeyPress, TwoKeyCombo
+import time, sys
 
 stageMap = {
     '1-4': '1',
@@ -8,32 +8,103 @@ stageMap = {
     '2-4': '4'
 }
 
-def repeat_stage_24(fleet, iterations):
+def enterCampaignMode():
+    # Time it takes to change to the correct window - can remove in future
+    time.sleep(10)
     KeyPress('M')
     TwoKeyCombo('LSHIFT', 'R')
-    KeyPress('N')
-    TwoKeyCombo('LSHIFT', '4')
+
+def selectFleet(fleet):
     KeyPress('G')
     KeyPress('C')
     KeyPress(fleet)
     TwoKeyCombo('LCTRL', 'G')
-    time.sleep(5 * 120)
-    # Try and finish within 7.5 mins
-    remainingIterations = int(iterations) - 1
-    for i in range(remainingIterations):
+
+def repeatStage(iterations, timebox):
+    for i in range(iterations):
         TwoKeyCombo('LCTRL', 'C')
-        time.sleep(7.5 * 60)
+        time.sleep(timebox)
+
+def returnToMainMenu():
     KeyPress('X')
     KeyPress('X')
     KeyPress('X')
 
+def repeat_stage_14(fleet, iterations):
+    enterCampaignMode()
+    TwoKeyCombo('LSHIFT', '1')
+    selectFleet(fleet)
+    timebox = 5 * 60
+    time.sleep(timebox)
+    remainingIterations = int(iterations) - 1
+    repeatStage(remainingIterations)
+    returnToMainMenu()
 
-def main(fleet, iterations):
-    repeat_stage_24(fleet, iterations)
+# Chapter 2 maps require 3 battles to make the boss appear
+# A fourth escort fleet can spawn before the boss though
+# Try and finish within 7.5 mins
+
+def repeat_stage_22(fleet, iterations):
+    enterCampaignMode()
+    KeyPress('N')
+    TwoKeyCombo('LSHIFT', '1')
+    selectFleet(fleet)
+    timebox = 7.5 * 60
+    time.sleep(timebox)
+    remainingIterations = int(iterations) - 1
+    repeatStage(remainingIterations)
+    returnToMainMenu()
+
+def repeat_stage_23(fleet, iterations):
+    enterCampaignMode()
+    KeyPress('N')
+    TwoKeyCombo('LSHIFT', '2')
+    selectFleet(fleet)
+    timebox = 7.5 * 60
+    time.sleep(timebox)
+    remainingIterations = int(iterations) - 1
+    repeatStage(remainingIterations)
+    returnToMainMenu()
+
+def repeat_stage_24(fleet, iterations):
+    enterCampaignMode()
+    KeyPress('N')
+    TwoKeyCombo('LSHIFT', '3')
+    selectFleet(fleet)
+    timebox = 7.5 * 60
+    time.sleep(timebox)
+    remainingIterations = int(iterations) - 1
+    repeatStage(remainingIterations)
+    returnToMainMenu()    
+
+supportedStages = [
+    '1-4',
+    '2-2',
+    '2-3',
+    '2-4'
+]
+
+def printSupportedStages():
+    print("Supported stages:")
+    for stage in supportedStages:
+        print(stage)
+
+def main(stage, fleet, iterations):
+    if stage not in supportedStages:
+        printSupportedStages()
+    else:
+        # Get control of the right window
+        if stage == '1-4':
+            repeat_stage_14(fleet, iterations)
+        elif stage == '2-2':
+            repeat_stage_22(fleet, iterations)
+        elif stage == '2-3':
+            repeat_stage_23(fleet, iterations)
+        elif stage == '2-4':
+            repeat_stage_24(fleet, iterations)
     
-
 if __name__ == '__main__':
     try:
-        main(sys.argv[1], sys.argv[2])
+        main(sys.argv[1], sys.argv[2], sys.argv[3])
     except IndexError:
-        print(f"Usage: {sys.argv[0]} <Fleet number> <Number of times to repeat stage>")
+        print(f"Usage: {sys.argv[0]} <Stage> <Fleet number> <Number of times to repeat stage>")
