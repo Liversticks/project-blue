@@ -1,5 +1,7 @@
 from inputKeys import KeyPress, TwoKeyCombo
-import time, sys
+from windowManager import WindowMgr
+import time
+import sys
 
 stageMap = {
     '1-4': '1',
@@ -133,6 +135,11 @@ supportedStages = [
     '3-4'
 ]
 
+def switchToApplication():
+    wm = WindowMgr()
+    wm.find_window_wildcard("BlueStacks")
+    wm.set_foreground()
+
 def printSupportedStages():
     print("Supported stages:")
     for stage in supportedStages:
@@ -142,7 +149,7 @@ def main(stage, fleet, iterations):
     if stage not in supportedStages:
         printSupportedStages()
     else:
-        # TODO: Get control of the right window
+        switchToApplication()
         if stage == '1-4':
             repeat_stage_14(fleet, iterations)
         elif stage == '2-2':
