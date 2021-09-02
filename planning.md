@@ -7,10 +7,15 @@
 - Quick Retire for Rare and Common ships
 - Send keyboard events using Win32 API
 - Basic command line interface
+- Automatically switch to Bluestacks window
 
 # Tasks (in Bluestacks)
 - Coordinates for 4-2, Chapter 3 SOS
 - Access SOS missions (for Chapter 3)
+- Repeat on defeat
 
 # Tasks (in Python)
-- Automatically switch to Bluestacks window
+- Discord monitoring
+- Screenshot/visual based decision-making
+- Basic telemetry - log victories
+- Basic telemetry - check timebox

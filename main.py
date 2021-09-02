@@ -12,7 +12,7 @@ stageMap = {
 
 def enterCampaignMode():
     # Time it takes to change to the correct window - can remove in future
-    time.sleep(10)
+    time.sleep(3)
     KeyPress('M')
     time.sleep(1)
     TwoKeyCombo('LSHIFT', 'R')
@@ -145,6 +145,13 @@ def printSupportedStages():
     for stage in supportedStages:
         print(stage)
 
+def endRoutine():
+    # Quick Retire
+    KeyPress('R')
+    time.sleep(25)
+    # Collect oil and coins
+    KeyPress('H')
+
 def main(stage, fleet, iterations):
     if stage not in supportedStages:
         printSupportedStages()
@@ -162,8 +169,7 @@ def main(stage, fleet, iterations):
             repeat_stage_32(fleet, iterations)
         elif stage == '3-4':
             repeat_stage_34(fleet, iterations)
-        # Quick Retire
-        KeyPress('R')
+        endRoutine()
     
 if __name__ == '__main__':
     try:

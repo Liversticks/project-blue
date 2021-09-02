@@ -23,3 +23,4 @@
 
 ## Main Menu Tasks
 - R: Quick Retire
+- H: Collect resources from Canteen and Merchant
