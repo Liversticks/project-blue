@@ -43,7 +43,6 @@ def selectFirstSurfaceFleet(fleet):
     KeyPress('C')
     KeyPress(fleet)
     
-
 def selectSecondSurfaceFleet(fleet):
     KeyPress('3')
     newKey = int(fleet) + 3
@@ -82,9 +81,11 @@ def repeat_stage(fleet, iterations, boss=None, stage="1-4"):
     timebox = stageMetadata[1]
     time.sleep(timebox)
     remainingIterations = int(iterations) - 1
+    # TODO: check status of stage attempt and emit somewhere
     repeatStage(remainingIterations, timebox)
     returnToMainMenu()
 
+"""
 supportedStages = [
     '1-4',
     '2-2',
@@ -95,6 +96,7 @@ supportedStages = [
     '4-2',
     '6-3'
 ]
+"""
 
 def switchToApplication():
     wm = WindowMgr()
@@ -103,7 +105,7 @@ def switchToApplication():
 
 def printSupportedStages():
     print("Supported stages:")
-    for stage in supportedStages:
+    for stage in stageMap.keys():
         print(stage)
 
 def endRoutine():
@@ -116,13 +118,26 @@ def endRoutine():
     KeyPress('H')
 
 def combined(stage, mob_fleet, iterations, boss_fleet=None):
-    if stage not in supportedStages:
+    if stage not in stageMap.keys():
         printSupportedStages()
+    elif iterations < 1:
+        print("Must provide a positive number for the number of iterations")
     else:
         switchToApplication()
         repeat_stage(mob_fleet, iterations, stage=stage, boss=boss_fleet)
         endRoutine()
-    
+
+# TODO: revise for calling
+"""
+def discord_entry(stage, mob_fleet, iterations, boss_fleet=None):
+    if stage not in supportedStages:
+        return supportedStages
+    else:
+        switchToApplication()
+        repeat_stage(mob_fleet, iterations, stage=stage, boss=boss_fleet)
+        endRoutine()
+"""
+
 if __name__ == '__main__':    
     if len(sys.argv) >= 4:
         try:
