@@ -4,9 +4,12 @@ import time
 import sys
 import re
 
-getChapter = re.compile(r'(\d)+-\d+')
+getChapter = re.compile(r'(\d+)-\d+')
 
 # TODO: fine-tuning of time
+# Chapter 2 maps require 3 battles to make the boss appear
+# A fourth escort fleet can spawn before the boss though
+# Try and finish within 7.5 mins
 stageMap = {
     '1-4': (('LSHIFT', '1'), 5 * 60),
     '2-2': (('LSHIFT', '1'), 7.5 * 60),
@@ -64,12 +67,12 @@ def returnToMainMenu():
 def repeat_stage(fleet, iterations, boss=None, stage="1-4"):
     enterCampaignMode()
     stageMetadata = stageMap[stage]
-    chapter = int(getChapter.match(stage).group(0))
+    chapter = int(getChapter.match(stage).group(1))
     goToChapter(chapter)
     # Currently, only support two-key to enter stage
     TwoKeyCombo(stageMetadata[0][0], stageMetadata[0][1])
     enterFleetSelection()
-    if stage is not '1-4':
+    if stage != '1-4':
         clearSecondSurfaceFleet()
     selectFirstSurfaceFleet(fleet)
     if boss is not None:
@@ -77,145 +80,6 @@ def repeat_stage(fleet, iterations, boss=None, stage="1-4"):
         assignFleetRoles()
     TwoKeyCombo('LCTRL', 'G')
     timebox = stageMetadata[1]
-    time.sleep(timebox)
-    remainingIterations = int(iterations) - 1
-    repeatStage(remainingIterations, timebox)
-    returnToMainMenu()
-
-
-def repeat_stage_14(fleet, iterations):
-    enterCampaignMode()
-    TwoKeyCombo('LSHIFT', '1')
-    enterFleetSelection()
-    selectFirstSurfaceFleet(fleet)
-    TwoKeyCombo('LCTRL', 'G')
-    timebox = 5 * 60
-    time.sleep(timebox)
-    remainingIterations = int(iterations) - 1
-    repeatStage(remainingIterations, timebox)
-    returnToMainMenu()
-
-# Chapter 2 maps require 3 battles to make the boss appear
-# A fourth escort fleet can spawn before the boss though
-# Try and finish within 7.5 mins
-
-def repeat_stage_22(fleet, iterations, boss=None):
-    enterCampaignMode()
-    goToChapter(2)
-    TwoKeyCombo('LSHIFT', '1')
-    enterFleetSelection()
-    clearSecondSurfaceFleet()
-    selectFirstSurfaceFleet(fleet)
-    if boss is not None:
-        selectSecondSurfaceFleet(boss)
-        assignFleetRoles()
-    TwoKeyCombo('LCTRL', 'G')
-    timebox = 7.5 * 60
-    time.sleep(timebox)
-    remainingIterations = int(iterations) - 1
-    repeatStage(remainingIterations, timebox)
-    returnToMainMenu()
-
-def repeat_stage_23(fleet, iterations, boss=None):
-    enterCampaignMode()
-    goToChapter(2)
-    TwoKeyCombo('LSHIFT', '2')
-    enterFleetSelection()
-    clearSecondSurfaceFleet()
-    selectFirstSurfaceFleet(fleet)
-    if boss is not None:
-        selectSecondSurfaceFleet(boss)
-        assignFleetRoles()
-    TwoKeyCombo('LCTRL', 'G')
-    timebox = 7.5 * 60
-    time.sleep(timebox)
-    remainingIterations = int(iterations) - 1
-    repeatStage(remainingIterations, timebox)
-    returnToMainMenu()
-
-def repeat_stage_24(fleet, iterations, boss=None):
-    enterCampaignMode()
-    goToChapter(2)
-    TwoKeyCombo('LSHIFT', '3')
-    enterFleetSelection()
-    clearSecondSurfaceFleet()
-    selectFirstSurfaceFleet(fleet)
-    if boss is not None:
-        selectSecondSurfaceFleet(boss)
-        assignFleetRoles()
-    TwoKeyCombo('LCTRL', 'G')
-    timebox = 7.5 * 60
-    time.sleep(timebox)
-    remainingIterations = int(iterations) - 1
-    repeatStage(remainingIterations, timebox)
-    returnToMainMenu()    
-
-# Stage 3-2 can have up to 6 battles as the boss can be blocked
-# by up to 2 escort fleets
-
-def repeat_stage_32(fleet, iterations, boss=None):
-    enterCampaignMode()
-    goToChapter(3)
-    TwoKeyCombo('LSHIFT', '4')
-    enterFleetSelection()
-    clearSecondSurfaceFleet()
-    selectFirstSurfaceFleet(fleet)
-    if boss is not None:
-        selectSecondSurfaceFleet(boss)
-        assignFleetRoles()
-    TwoKeyCombo('LCTRL', 'G')
-    timebox = 7.5 * 60
-    time.sleep(timebox)
-    remainingIterations = int(iterations) - 1
-    repeatStage(remainingIterations, timebox)
-    returnToMainMenu()    
-
-def repeat_stage_34(fleet, iterations, boss=None):
-    enterCampaignMode()
-    goToChapter(3)
-    TwoKeyCombo('LSHIFT', '5')
-    enterFleetSelection()
-    clearSecondSurfaceFleet()
-    selectFirstSurfaceFleet(fleet)
-    if boss is not None:
-        selectSecondSurfaceFleet(boss)
-        assignFleetRoles()
-    TwoKeyCombo('LCTRL', 'G')
-    timebox = 6 * 60
-    time.sleep(timebox)
-    remainingIterations = int(iterations) - 1
-    repeatStage(remainingIterations, timebox)
-    returnToMainMenu()    
-
-def repeat_stage_42(fleet, iterations, boss=None):
-    enterCampaignMode()
-    goToChapter(4)
-    TwoKeyCombo('LSHIFT', '5')
-    enterFleetSelection()
-    clearSecondSurfaceFleet()
-    selectFirstSurfaceFleet(fleet)
-    if boss is not None:
-        selectSecondSurfaceFleet(boss)
-        assignFleetRoles()
-    TwoKeyCombo('LCTRL', 'G')
-    timebox = 7.5 * 60
-    time.sleep(timebox)
-    remainingIterations = int(iterations) - 1
-    repeatStage(remainingIterations, timebox)
-    returnToMainMenu()
-
-def repeat_stage_63(fleet, iterations, boss=None):
-    enterCampaignMode()
-    goToChapter(6)
-    TwoKeyCombo('LSHIFT', '6')
-    enterFleetSelection()
-    clearSecondSurfaceFleet()
-    selectFirstSurfaceFleet(fleet)
-    if boss is not None:
-        selectSecondSurfaceFleet(boss)
-        assignFleetRoles()
-    TwoKeyCombo('LCTRL', 'G')
-    timebox = 7.5 * 60
     time.sleep(timebox)
     remainingIterations = int(iterations) - 1
     repeatStage(remainingIterations, timebox)
@@ -251,26 +115,18 @@ def endRoutine():
     # Collect oil and coins
     KeyPress('H')
 
-def combined(stage, fleet, iterations):
+def combined(stage, mob_fleet, iterations, boss_fleet=None):
     if stage not in supportedStages:
         printSupportedStages()
     else:
         switchToApplication()
-        repeat_stage(fleet, iterations, stage=stage)
-        endRoutine()
-
-def two_fleets(stage, mob_fleet, boss_fleet, iterations):
-    if stage not in supportedStages:
-        printSupportedStages()
-    else:
-        switchToApplication()
-        repeat_stage(mob_fleet, iterations, boss=boss_fleet, stage=stage)
+        repeat_stage(mob_fleet, iterations, stage=stage, boss=boss_fleet)
         endRoutine()
     
-if __name__ == '__main__':
-    if len(sys.argv) == 5:
+if __name__ == '__main__':    
+    if len(sys.argv) >= 4:
         try:
-            two_fleets(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+            combined(sys.argv[1], sys.argv[2], sys.argv[4], boss_fleet=sys.argv[3])
         except IndexError:
             print(f"Usage: {sys.argv[0]} <Stage> <Mobbing fleet number> <Boss fleet number> <Number of times to repeat stage>")
     elif len(sys.argv) == 4:
