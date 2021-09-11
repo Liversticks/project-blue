@@ -120,7 +120,7 @@ def endRoutine():
 def combined(stage, mob_fleet, iterations, boss_fleet=None):
     if stage not in stageMap.keys():
         printSupportedStages()
-    elif iterations < 1:
+    elif int(iterations) < 1:
         print("Must provide a positive number for the number of iterations")
     else:
         switchToApplication()
