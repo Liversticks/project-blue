@@ -18,7 +18,8 @@ stageMap = {
     '3-2': (('LSHIFT', '4'), 7.5 * 60),
     '3-4': (('LSHIFT', '5'), 5.25 * 60),
     '4-2': (('LSHIFT', '5'), 7.5 * 60),
-    '6-3': (('LSHIFT', '6'), 7.5 * 60)
+    '6-3': (('LSHIFT', '6'), 7.5 * 60),
+    'C1': (('LSHIFT', 'Q'), 7.5 * 60)
 }
 
 def enterCampaignMode():
@@ -85,18 +86,29 @@ def repeat_stage(fleet, iterations, boss=None, stage="1-4"):
     repeatStage(remainingIterations, timebox)
     returnToMainMenu()
 
-"""
-supportedStages = [
-    '1-4',
-    '2-2',
-    '2-3',
-    '2-4',
-    '3-2',
-    '3-4',
-    '4-2',
-    '6-3'
-]
-"""
+def goToEvent():
+    KeyPress('E')
+
+def repeat_event_hard_stage(iterations, stage="C1"):
+    goToEvent()
+    time.sleep(2)
+    KeyPress('P')
+    KeyPress('P')
+    if stage[0] == 'D':
+        KeyPress('N')
+    stageMetadata = stageMap[stage]
+    TwoKeyCombo(stageMetadata[0][0], stageMetadata[0][1])
+    KeyPress('G')
+    time.sleep(1)
+    TwoKeyCombo('LCTRL', 'G')
+    timebox = stageMetadata[1]
+    time.sleep(timebox)
+    remainingIterations = int(iterations) - 1
+    # TODO: check status of stage attempt and emit somewhere
+    repeatStage(remainingIterations, timebox)
+    returnToMainMenu()
+    KeyPress('X')
+
 
 def switchToApplication():
     wm = WindowMgr()
@@ -127,6 +139,18 @@ def combined(stage, mob_fleet, iterations, boss_fleet=None):
         repeat_stage(mob_fleet, iterations, stage=stage, boss=boss_fleet)
         endRoutine()
 
+def specialHardMode(stage, iterations):
+    if stage not in stageMap.keys():
+        printSupportedStages()
+    elif int(iterations) < 1:
+        print("Must provide a positive number for the number of iterations")
+    else:
+        switchToApplication()
+        repeat_event_hard_stage(iterations, stage=stage)
+        # Clean stuff up yourself
+        #endRoutine()
+
+
 # TODO: revise for calling
 """
 def discord_entry(stage, mob_fleet, iterations, boss_fleet=None):
@@ -139,14 +163,19 @@ def discord_entry(stage, mob_fleet, iterations, boss_fleet=None):
 """
 
 if __name__ == '__main__':    
-    if len(sys.argv) >= 4:
+    if len(sys.argv) >= 5:
         try:
             combined(sys.argv[1], sys.argv[2], sys.argv[4], boss_fleet=sys.argv[3])
         except IndexError:
             print(f"Usage: {sys.argv[0]} <Stage> <Mobbing fleet number> <Boss fleet number> <Number of times to repeat stage>")
-    elif len(sys.argv) == 4:
+    elif len(sys.argv) >= 4:
         try:
             combined(sys.argv[1], sys.argv[2], sys.argv[3])
         except IndexError:
             print(f"Usage: {sys.argv[0]} <Stage> <Mob/boss fleet number> <Number of times to repeat stage>")
+    elif len(sys.argv) >= 3:
+        try:
+            specialHardMode(sys.argv[1], sys.argv[2])
+        except IndexError:
+            print(f"Usage: {sys.argv[0]} <Stage> <Number of times to repeat stage>")
     
