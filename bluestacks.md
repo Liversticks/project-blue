@@ -28,6 +28,10 @@
 - O: Assign mobbing to Fleet 1 and boss to Fleet 2
 - Ctrl + C: Continue same stage
 
+## Event Map
+- Shift + Q: C1 (Hard 1-1)
+- Shift + W: B3 (Normal 2-3)
+
 ## Main Menu Tasks
 - R: Quick Retire (NOTE: depends on whether there is a Limited building slot)
 - H: Collect resources from Canteen and Merchant
