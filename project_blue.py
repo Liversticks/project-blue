@@ -22,12 +22,27 @@ stageMap = {
     '3-4': (('LSHIFT', '5'), 5.25 * 60),
     '4-2': (('LSHIFT', '5'), 7.5 * 60),
     '6-3': (('LSHIFT', '6'), 7.5 * 60),
+    'A1': (('LSHIFT', 'Q'), 7.5 * 60),
+    'A2': (('LSHIFT', 'E'), 7.5 * 60),
+    'A3': (('LSHIFT', 'W'), 7.5 * 60),
+    'B1': (('LSHIFT', 'Y'), 7.5 * 60),
+    'B2': (('LSHIFT', 'T'), 7.5 * 60),
     'B3': (('LSHIFT', 'W'), 7.5 * 60),
     'C1': (('LSHIFT', 'Q'), 7.5 * 60)
 }
 
 # Normal mode only!
 eventPrefix = ['A', 'B']
+
+# Need to adjust timing above!
+eventNormalModeStages = [
+    'A1',
+    'A2',
+    'A3',
+    'B1',
+    'B2',
+    'B3'
+]
 
 def enterCampaignMode():
     # Time it takes to change to the correct window - can remove in future
@@ -67,9 +82,8 @@ def repeatStage(iterations, timebox):
         time.sleep(timebox)
 
 def returnToMainMenu():
-    KeyPress('X')
-    KeyPress('X')
-    KeyPress('X')
+    TwoKeyCombo('LCTRL', 'H')
+    time.sleep(1)
 
 def repeat_stage(fleet, iterations, boss=None, stage="1-4"):
     stageMetadata = stageMap[stage]
@@ -94,6 +108,7 @@ def repeat_stage(fleet, iterations, boss=None, stage="1-4"):
     time.sleep(timebox)
     remainingIterations = int(iterations) - 1
     # TODO: check status of stage attempt and emit somewhere
+
     repeatStage(remainingIterations, timebox)
     returnToMainMenu()
 
@@ -105,11 +120,9 @@ def goToEventChapter(prefix):
     if prefix == 'B':
         KeyPress('N')
 
-    
 def repeat_event_hard_stage(iterations, stage="C1"):
     goToEvent()
     time.sleep(2)
-    KeyPress('P')
     KeyPress('P')
     if stage[0] == 'D':
         KeyPress('N')
@@ -124,8 +137,6 @@ def repeat_event_hard_stage(iterations, stage="C1"):
     # TODO: check status of stage attempt and emit somewhere
     repeatStage(remainingIterations, timebox)
     returnToMainMenu()
-    KeyPress('X')
-
 
 def switchToApplication():
     wm = WindowMgr()
@@ -156,6 +167,15 @@ def combined(stage, mob_fleet, iterations, boss_fleet=None):
         repeat_stage(mob_fleet, iterations, stage=stage, boss=boss_fleet)
         endRoutine()
 
+def clearNormalEventStages(mob_fleet, iterations=1, boss_fleet=None):
+    if int(iterations) < 1:
+        print("Must provide a positive number for the number of iterations")
+    else:
+        switchToApplication()
+        for stage in eventNormalModeStages:
+            repeat_stage(mob_fleet, iterations, boss=boss_fleet, stage=stage)
+        endRoutine()
+
 def specialHardMode(stage, iterations):
     if stage not in stageMap.keys():
         printSupportedStages()
@@ -182,7 +202,10 @@ def discord_entry(stage, mob_fleet, iterations, boss_fleet=None):
 if __name__ == '__main__':    
     if len(sys.argv) >= 5:
         try:
-            combined(sys.argv[1], sys.argv[2], sys.argv[4], boss_fleet=sys.argv[3])
+            if (sys.argv[1] == 'event'):
+                clearNormalEventStages(sys.argv[2], sys.argv[4], boss_fleet=sys.argv[3])
+            else:
+                combined(sys.argv[1], sys.argv[2], sys.argv[4], boss_fleet=sys.argv[3])
         except IndexError:
             print(f"Usage: {sys.argv[0]} <Stage> <Mobbing fleet number> <Boss fleet number> <Number of times to repeat stage>")
     elif len(sys.argv) >= 4:
