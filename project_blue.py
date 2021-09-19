@@ -10,6 +10,9 @@ getChapter = re.compile(r'(\d+)-\d+')
 # Chapter 2 maps require 3 battles to make the boss appear
 # A fourth escort fleet can spawn before the boss though
 
+# I can code in more event stages but it's only worth it to grind B3
+# (oil to event token reward)
+
 stageMap = {
     '1-4': (('LSHIFT', '1'), 5 * 60),
     '2-2': (('LSHIFT', '1'), 7.5 * 60),
@@ -19,8 +22,12 @@ stageMap = {
     '3-4': (('LSHIFT', '5'), 5.25 * 60),
     '4-2': (('LSHIFT', '5'), 7.5 * 60),
     '6-3': (('LSHIFT', '6'), 7.5 * 60),
+    'B3': (('LSHIFT', 'W'), 7.5 * 60),
     'C1': (('LSHIFT', 'Q'), 7.5 * 60)
 }
+
+# Normal mode only!
+eventPrefix = ['A', 'B']
 
 def enterCampaignMode():
     # Time it takes to change to the correct window - can remove in future
@@ -65,10 +72,14 @@ def returnToMainMenu():
     KeyPress('X')
 
 def repeat_stage(fleet, iterations, boss=None, stage="1-4"):
-    enterCampaignMode()
     stageMetadata = stageMap[stage]
-    chapter = int(getChapter.match(stage).group(1))
-    goToChapter(chapter)
+    if stage[0] in eventPrefix:
+        goToEvent()
+        goToEventChapter(stage[0])
+    else:
+        enterCampaignMode()
+        chapter = int(getChapter.match(stage).group(1))
+        goToChapter(chapter)
     # Currently, only support two-key to enter stage
     TwoKeyCombo(stageMetadata[0][0], stageMetadata[0][1])
     enterFleetSelection()
@@ -89,6 +100,12 @@ def repeat_stage(fleet, iterations, boss=None, stage="1-4"):
 def goToEvent():
     KeyPress('E')
 
+def goToEventChapter(prefix):
+    KeyPress('P')
+    if prefix == 'B':
+        KeyPress('N')
+
+    
 def repeat_event_hard_stage(iterations, stage="C1"):
     goToEvent()
     time.sleep(2)
