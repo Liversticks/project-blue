@@ -3,6 +3,7 @@
 ## Menus
 - M: Go from main menu to campaign
 - X: Go back/exit current layer
+- Ctrl + H: Return to main menu
 
 ## Campaign
 - P: Go to previous chapter
@@ -29,8 +30,11 @@
 - Ctrl + C: Continue same stage
 
 ## Event Map
-- Shift + Q: C1 (Hard 1-1)
-- Shift + W: B3 (Normal 2-3)
+- Shift + Q: C1, A1 
+- Shift + W: A3, B3 
+- Shift + E: A2
+- Shift + Y: B1
+- Shift + T: B2
 
 ## Main Menu Tasks
 - R: Quick Retire (NOTE: depends on whether there is a Limited building slot)
