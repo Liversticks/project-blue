@@ -19,12 +19,12 @@ stageMap = {
     '3-4': (('LSHIFT', '5'), 5.25 * 60),
     '4-2': (('LSHIFT', '5'), 7.5 * 60),
     '6-3': (('LSHIFT', '6'), 7.5 * 60),
-    'A1': (('LSHIFT', 'Q'), 5 * 60),
-    'A2': (('LSHIFT', 'E'), 5.5 * 60),
-    'A3': (('LSHIFT', 'W'), 5.5 * 60),
-    'B1': (('LSHIFT', 'Y'), 5.5 * 60),
-    'B2': (('LSHIFT', 'T'), 5.5 * 60),
-    'B3': (('LSHIFT', 'W'), 6.5 * 60),
+    'A1': (('LSHIFT', 'Q'), 5.5 * 60),
+    'A2': (('LSHIFT', 'E'), 6 * 60),
+    'A3': (('LSHIFT', 'W'), 6 * 60),
+    'B1': (('LSHIFT', 'Y'), 6.5 * 60),
+    'B2': (('LSHIFT', 'T'), 6.5 * 60),
+    'B3': (('LSHIFT', 'W'), 7.5 * 60),
     'C1': (('LSHIFT', 'Q'), 7.5 * 60)
 }
 
@@ -172,7 +172,7 @@ def clearNormalEventStages(mob_fleet, iterations=1, boss_fleet=None):
         switchToApplication()
         for stage in eventNormalModeStages:
             repeat_stage(mob_fleet, iterations, boss=boss_fleet, stage=stage)
-        endRoutine(quick_retire=False)
+        endRoutine()
 
 def specialHardMode(stage, iterations):
     if stage not in stageMap.keys():
