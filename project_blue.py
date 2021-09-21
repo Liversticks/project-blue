@@ -10,9 +10,6 @@ getChapter = re.compile(r'(\d+)-\d+')
 # Chapter 2 maps require 3 battles to make the boss appear
 # A fourth escort fleet can spawn before the boss though
 
-# I can code in more event stages but it's only worth it to grind B3
-# (oil to event token reward)
-
 stageMap = {
     '1-4': (('LSHIFT', '1'), 5 * 60),
     '2-2': (('LSHIFT', '1'), 7.5 * 60),
@@ -23,11 +20,11 @@ stageMap = {
     '4-2': (('LSHIFT', '5'), 7.5 * 60),
     '6-3': (('LSHIFT', '6'), 7.5 * 60),
     'A1': (('LSHIFT', 'Q'), 5 * 60),
-    'A2': (('LSHIFT', 'E'), 6 * 60),
-    'A3': (('LSHIFT', 'W'), 6 * 60),
-    'B1': (('LSHIFT', 'Y'), 6 * 60),
-    'B2': (('LSHIFT', 'T'), 7.5 * 60),
-    'B3': (('LSHIFT', 'W'), 7.5 * 60),
+    'A2': (('LSHIFT', 'E'), 5.5 * 60),
+    'A3': (('LSHIFT', 'W'), 5.5 * 60),
+    'B1': (('LSHIFT', 'Y'), 5.5 * 60),
+    'B2': (('LSHIFT', 'T'), 5.5 * 60),
+    'B3': (('LSHIFT', 'W'), 6.5 * 60),
     'C1': (('LSHIFT', 'Q'), 7.5 * 60)
 }
 
@@ -82,8 +79,9 @@ def repeatStage(iterations, timebox):
         time.sleep(timebox)
 
 def returnToMainMenu():
-    TwoKeyCombo('LCTRL', 'H')
-    time.sleep(1)
+    for _ in range(2):
+        TwoKeyCombo('LCTRL', 'H')
+        time.sleep(1)
 
 def repeat_stage(fleet, iterations, boss=None, stage="1-4"):
     stageMetadata = stageMap[stage]
@@ -148,12 +146,12 @@ def printSupportedStages():
     for stage in stageMap.keys():
         print(stage)
 
-def endRoutine():
+def endRoutine(quick_retire=True):
     # Quick Retire
     # Remember to lock your ships!
-    KeyPress('R')
-    time.sleep(25)
-    
+    if quick_retire:
+        KeyPress('R')
+        time.sleep(25)
     # Collect oil and coins
     KeyPress('H')
 
@@ -174,7 +172,7 @@ def clearNormalEventStages(mob_fleet, iterations=1, boss_fleet=None):
         switchToApplication()
         for stage in eventNormalModeStages:
             repeat_stage(mob_fleet, iterations, boss=boss_fleet, stage=stage)
-        endRoutine()
+        endRoutine(quick_retire=False)
 
 def specialHardMode(stage, iterations):
     if stage not in stageMap.keys():
@@ -184,8 +182,7 @@ def specialHardMode(stage, iterations):
     else:
         switchToApplication()
         repeat_event_hard_stage(iterations, stage=stage)
-        # Clean stuff up yourself
-        #endRoutine()
+        endRoutine(quick_retire=False)
 
 
 # TODO: revise for calling
