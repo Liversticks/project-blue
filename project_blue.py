@@ -188,7 +188,6 @@ def specialHardMode(stage, iterations):
 def levelCatLodge():
     switchToApplication()
     KeyPress('C')
-    # TODO: Need to detect whether the "Confirm" button appears (it occurs in the same place as the queue)
     time.sleep(15)
 
 # TODO: revise for calling
