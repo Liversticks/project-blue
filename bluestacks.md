@@ -39,4 +39,4 @@
 ## Main Menu Tasks
 - R: Quick Retire (NOTE: depends on whether there is a Limited building slot)
 - H: Collect resources from Canteen and Merchant
-- C: Tend to Meowfficers in the Com-Forts
+- F: Tend to Meowfficers in the Com-Forts

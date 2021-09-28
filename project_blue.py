@@ -187,7 +187,7 @@ def specialHardMode(stage, iterations):
 
 def levelCatLodge():
     switchToApplication()
-    KeyPress('C')
+    KeyPress('F')
     time.sleep(15)
 
 # TODO: revise for calling
