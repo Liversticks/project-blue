@@ -20,10 +20,10 @@ stageMap = {
     '4-2': (('LSHIFT', '5'), 7.5 * 60),
     '6-3': (('LSHIFT', '6'), 7.5 * 60),
     'A1': (('LSHIFT', 'Q'), 5.5 * 60),
-    'A2': (('LSHIFT', 'E'), 6 * 60),
-    'A3': (('LSHIFT', 'W'), 6 * 60),
+    'A2': (('LSHIFT', 'E'), 6.5 * 60),
+    'A3': (('LSHIFT', 'W'), 6.5 * 60),
     'B1': (('LSHIFT', 'Y'), 6.5 * 60),
-    'B2': (('LSHIFT', 'T'), 6.5 * 60),
+    'B2': (('LSHIFT', 'T'), 7.5 * 60),
     'B3': (('LSHIFT', 'W'), 7.5 * 60),
     'C1': (('LSHIFT', 'Q'), 7.5 * 60)
 }
@@ -106,7 +106,7 @@ def repeat_stage(fleet, iterations, boss=None, stage="1-4"):
     time.sleep(timebox)
     remainingIterations = int(iterations) - 1
     # TODO: check status of stage attempt and emit somewhere
-
+    print(time.localtime(time.time()))
     repeatStage(remainingIterations, timebox)
     returnToMainMenu()
 
@@ -185,6 +185,12 @@ def specialHardMode(stage, iterations):
         endRoutine(quick_retire=False)
 
 
+def levelCatLodge():
+    switchToApplication()
+    KeyPress('C')
+    # TODO: Need to detect whether the "Confirm" button appears (it occurs in the same place as the queue)
+    time.sleep(15)
+
 # TODO: revise for calling
 """
 def discord_entry(stage, mob_fleet, iterations, boss_fleet=None):
@@ -215,4 +221,12 @@ if __name__ == '__main__':
             specialHardMode(sys.argv[1], sys.argv[2])
         except IndexError:
             print(f"Usage: {sys.argv[0]} <Stage> <Number of times to repeat stage>")
+    elif len(sys.argv) >= 2:
+        try:
+            if (sys.argv[1] == 'cat'):
+                levelCatLodge()
+        except IndexError:
+            print(f"Usage: {sys.argv[0]} <Command>")
+            print("Currently supported commands:")
+            print("cat")
     
