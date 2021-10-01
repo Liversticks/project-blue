@@ -19,6 +19,7 @@ stageMap = {
     '3-4': (('LSHIFT', '5'), 7.5 * 60),
     '4-2': (('LSHIFT', '5'), 7.5 * 60),
     '6-3': (('LSHIFT', '6'), 7.5 * 60),
+    '6-4': (('LSHIFT', '7'), 9 * 60),
     'A1': (('LSHIFT', 'Q'), 5.5 * 60),
     'A2': (('LSHIFT', 'E'), 6.5 * 60),
     'A3': (('LSHIFT', 'W'), 6.5 * 60),
@@ -202,6 +203,8 @@ def discord_entry(stage, mob_fleet, iterations, boss_fleet=None):
 """
 
 if __name__ == '__main__':    
+    
+    # TODO: calling with "list of stages" first argument
     if len(sys.argv) >= 5:
         try:
             if (sys.argv[1] == 'event'):

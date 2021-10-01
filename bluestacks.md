@@ -15,6 +15,7 @@
 - Shift + 4: Stage 3-2
 - Shift + 5: Stage 3-4, Stage 4-2
 - Shift + 6: Stage 6-3
+- Shift + 7: Stage 6-4
 - G: Go from Campaign map to Fleet selection
 - C: Choose fleet for first surface slot
 - 1: Choose fleet 1 (surface 1)
