@@ -31,6 +31,7 @@ stageMap = {
 
 # Normal mode only!
 eventPrefix = ['A', 'B']
+eventString = 'event'
 
 # Need to adjust timing above!
 eventNormalModeStages = [
@@ -157,23 +158,26 @@ def endRoutine(quick_retire=True):
     KeyPress('H')
 
 def combined(stage, mob_fleet, iterations, boss_fleet=None):
-    if stage not in stageMap.keys():
-        printSupportedStages()
-    elif int(iterations) < 1:
-        print("Must provide a positive number for the number of iterations")
-    else:
-        switchToApplication()
-        repeat_stage(mob_fleet, iterations, stage=stage, boss=boss_fleet)
-        endRoutine()
-
-def clearNormalEventStages(mob_fleet, iterations=1, boss_fleet=None):
     if int(iterations) < 1:
         print("Must provide a positive number for the number of iterations")
-    else:
-        switchToApplication()
-        for stage in eventNormalModeStages:
-            repeat_stage(mob_fleet, iterations, boss=boss_fleet, stage=stage)
+        return
+    
+    switchToApplication()
+    if stage == eventString:
+        clearNormalEventStages(mob_fleet, iterations=iterations, boss_fleet=boss_fleet)
         endRoutine()
+    else:    
+        stagesToClear = stage.split()
+        for item in stagesToClear:
+            if item not in stageMap.keys():
+                printSupportedStages()
+            else:
+                repeat_stage(mob_fleet, iterations, stage=item, boss=boss_fleet)
+                endRoutine()
+
+def clearNormalEventStages(mob_fleet, iterations=1, boss_fleet=None):
+    for stage in eventNormalModeStages:
+        repeat_stage(mob_fleet, iterations, boss=boss_fleet, stage=stage)
 
 def specialHardMode(stage, iterations):
     if stage not in stageMap.keys():
@@ -204,25 +208,22 @@ def discord_entry(stage, mob_fleet, iterations, boss_fleet=None):
 
 if __name__ == '__main__':    
     
-    # TODO: calling with "list of stages" first argument
+    # TODO: documenting "event" (callable only on its own)
     if len(sys.argv) >= 5:
         try:
-            if (sys.argv[1] == 'event'):
-                clearNormalEventStages(sys.argv[2], sys.argv[4], boss_fleet=sys.argv[3])
-            else:
-                combined(sys.argv[1], sys.argv[2], sys.argv[4], boss_fleet=sys.argv[3])
+            combined(sys.argv[1], sys.argv[2], sys.argv[4], boss_fleet=sys.argv[3])                
         except IndexError:
-            print(f"Usage: {sys.argv[0]} <Stage> <Mobbing fleet number> <Boss fleet number> <Number of times to repeat stage>")
+            print(f"Usage: {sys.argv[0]} <Stage or whitespace-separated list of stages> <Mobbing fleet number> <Boss fleet number> <Number of times to repeat stage>")
     elif len(sys.argv) >= 4:
         try:
             combined(sys.argv[1], sys.argv[2], sys.argv[3])
         except IndexError:
-            print(f"Usage: {sys.argv[0]} <Stage> <Mob/boss fleet number> <Number of times to repeat stage>")
+            print(f"Usage: {sys.argv[0]} <Stage or whitespace-separated list of stages> <Mob/boss fleet number> <Number of times to repeat stage>")
     elif len(sys.argv) >= 3:
         try:
             specialHardMode(sys.argv[1], sys.argv[2])
         except IndexError:
-            print(f"Usage: {sys.argv[0]} <Stage> <Number of times to repeat stage>")
+            print(f"Usage: {sys.argv[0]} <Stage or whitespace-separated list of stages> <Number of times to repeat stage>")
     elif len(sys.argv) >= 2:
         try:
             if (sys.argv[1] == 'cat'):
