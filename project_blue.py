@@ -6,9 +6,7 @@ import re
 
 getChapter = re.compile(r'(\d+)-\d+')
 
-# TODO: fine-tuning of time
-# Chapter 2 maps require 3 battles to make the boss appear
-# A fourth escort fleet can spawn before the boss though
+# TODO: fine-tuning of time (change to sensible minimums for polling)
 
 stageMap = {
     '1-4': (('LSHIFT', '1'), 5 * 60),
@@ -20,6 +18,11 @@ stageMap = {
     '4-2': (('LSHIFT', '5'), 7.5 * 60),
     '6-3': (('LSHIFT', '6'), 7.5 * 60),
     '6-4': (('LSHIFT', '7'), 9 * 60),
+    '7-3': (('LSHIFT', '8'), 9 * 60),
+    '7-4': (('LSHIFT', '9'), 9 * 60),
+    '8-1': (('LSHIFT', '1'), 10 * 60),
+    '8-2': (('LSHIFT', 'Y'), 10 * 60),
+    '8-4': (('LSHIFT', '9'), 10 * 60),
     'A1': (('LSHIFT', 'Q'), 5.5 * 60),
     'A2': (('LSHIFT', 'E'), 6.5 * 60),
     'A3': (('LSHIFT', 'W'), 6.5 * 60),

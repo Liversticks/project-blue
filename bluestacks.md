@@ -9,13 +9,16 @@
 - P: Go to previous chapter
 - N: Go to next chapter
 - Shift + R: Go to Chapter 1
-- Shift + 1: Stage 1-4, Stage 2-2 (same spot)
+- Shift + 1: Stage 1-4, Stage 2-2, Stage 8-1 (same spot)
 - Shift + 2: Stage 2-3
 - Shift + 3: Stage 2-4
 - Shift + 4: Stage 3-2
 - Shift + 5: Stage 3-4, Stage 4-2
 - Shift + 6: Stage 6-3
 - Shift + 7: Stage 6-4
+- Shift + 8: Stage 7-3
+- Shift + 9: Stage 7-4, Stage 8-4
+- Shift + Y: Stage 8-2 (same as event B1?)
 - G: Go from Campaign map to Fleet selection
 - C: Choose fleet for first surface slot
 - 1: Choose fleet 1 (surface 1)
