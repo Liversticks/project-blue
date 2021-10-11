@@ -193,10 +193,11 @@ def specialHardMode(stage, iterations):
         endRoutine(quick_retire=False)
 
 
-def levelCatLodge():
+def catLodgeTasks():
     switchToApplication()
+    # Do everything
     KeyPress('F')
-    time.sleep(15)
+    time.sleep(60)
 
 # TODO: revise for calling
 """
@@ -230,7 +231,7 @@ if __name__ == '__main__':
     elif len(sys.argv) >= 2:
         try:
             if (sys.argv[1] == 'cat'):
-                levelCatLodge()
+                catLodgeTasks()
         except IndexError:
             print(f"Usage: {sys.argv[0]} <Command>")
             print("Currently supported commands:")
