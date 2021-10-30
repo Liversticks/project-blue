@@ -17,5 +17,44 @@
 # Tasks (in Python)
 - Discord monitoring
 - Screenshot/visual based decision-making
+
+Ideas:
+- Use a "floor" value (program will wait at least this long before attempting to finish)
+- Take a screenshot after this amount of time has elapsed
+- If the level has already been completed, decrement the floor value by a per-stage amount
+- If the level has not already been cleared yet, increment the floor value by a per-stage amount
+- To determine whether the level is cleared yet, use a classifier
+    - Take a screenshot as a PNG
+    - Use a PNG recompressor to make the file size smaller
+    - Use clustering colours to reduce the colour range
+    - Run the screenshot through the classifier
+    - Keep the screenshot for future classification
+
+
 - Basic telemetry - log victories
 - Basic telemetry - check timebox
+
+# New architecture
+
+- Use a finite state machine
+- States should have the following fields:
+    - Name of state
+    - Collection of valid transitions to take
+- Use transitions to move between states. Remap existing scripts/key bindings to match new transitions (rather than the old all-in-one scripts)
+    - Transitions should have the following fields:
+        - Binding to execute transition
+        - Time it takes for transition to elapse
+        - Result state
+    - Add "universal transitions" later (transitions that can happen from any state and trigger on some event or condition)
+- Move the following to the "top" of the application
+    - Window manager
+    - Screenshot utility (since it should only be opened infrequently)
+- Configuration for states and transitions should be done in files that can be read in (so on updates, only those need to be updated)
+
+# Utilities
+- Screenshot helper:
+    - Takes a screenshot of the application and saves it to the specified path
+- Control files copy (done)
+
+# Testing
+- Verify that transitions and states work properly
