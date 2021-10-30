@@ -4,6 +4,7 @@
 - M: Go from main menu to campaign
 - X: Go back/exit current layer
 - Ctrl + H: Return to main menu
+- V: Go directly to Event Map
 
 ## Campaign
 - P: Go to previous chapter
@@ -32,6 +33,8 @@
 - Ctrl + G: Go from fleet selection to the actual stage, choose fleet 6 (surface 2)
 - O: Assign mobbing to Fleet 1 and boss to Fleet 2
 - Ctrl + C: Continue same stage
+- E: EX stage (pressing twice goes to Hard Mode for events)
+- I: Normal/Hard Mode toggle
 
 ## Event Map
 - Shift + Q: C1, A1 
