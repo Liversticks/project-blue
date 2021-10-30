@@ -27,3 +27,6 @@ class WindowMgr:
     def set_foreground(self):
         """put the window in the foreground"""
         win32gui.SetForegroundWindow(self._handle)
+
+    def get_window_coordinates(self):
+        return win32gui.GetWindowRect(self._handle)
