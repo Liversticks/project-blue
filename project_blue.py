@@ -130,6 +130,8 @@ def returnToMainMenu():
 
 def repeat_stage(window, sct, fleet, iterations, boss=None, normal=True, stage="1-4"):
     stageMetadata = stageMap[stage]
+    if stage in eventHardModeStages:
+        normal = False
     if stage[0] in eventPrefix:
         goToEvent(normal)
         goToEventChapter(stage[0])
@@ -158,31 +160,13 @@ def goToEvent(normal=False):
     KeyPress('E')
     KeyPress('E')
     if normal:
-        KeyPress('I')
-    
+        time.sleep(1)
+        KeyPress('I')    
 
 def goToEventChapter(prefix):
     KeyPress('P')
     if prefix == 'B' or prefix == 'D':
         KeyPress('N')
-
-def repeat_event_hard_stage(iterations, stage="C1"):
-    goToEvent()
-    time.sleep(2)
-    KeyPress('P')
-    if stage[0] == 'D':
-        KeyPress('N')
-    stageMetadata = stageMap[stage]
-    TwoKeyCombo(stageMetadata[0][0], stageMetadata[0][1])
-    KeyPress('G')
-    time.sleep(1)
-    TwoKeyCombo('LCTRL', 'G')
-    timebox = stageMetadata[1]
-    time.sleep(timebox)
-    remainingIterations = int(iterations) - 1
-    # TODO: check status of stage attempt and emit somewhere
-    repeatStage(remainingIterations, timebox)
-    returnToMainMenu()
 
 def switchToApplication():
     wm = WindowMgr()
@@ -234,17 +218,6 @@ def clearHardEventStages(window, sct, mob_fleet, iterations=1, boss_fleet=None):
     for stage in eventHardModeStages:
         repeat_stage(window, sct, mob_fleet, iterations, boss=boss_fleet, normal=False, stage=stage)
 
-def specialHardMode(stage, iterations):
-    if stage not in stageMap.keys():
-        printSupportedStages()
-    elif int(iterations) < 1:
-        print("Must provide a positive number for the number of iterations")
-    else:
-        switchToApplication()
-        repeat_event_hard_stage(iterations, stage=stage)
-        endRoutine(quick_retire=False)
-
-
 def catLodgeTasks():
     switchToApplication()
     # Do everything
@@ -275,12 +248,6 @@ if __name__ == '__main__':
             combined(sys.argv[1], sys.argv[2], sys.argv[3])
         except IndexError:
             print(f"Usage: {sys.argv[0]} <Stage or whitespace-separated list of stages> <Mob/boss fleet number> <Number of times to repeat stage>")
-    elif len(sys.argv) >= 3:
-        try:
-            specialHardMode(sys.argv[1], sys.argv[2])
-        except IndexError:
-            print(f"Usage: {sys.argv[0]} <Stage or whitespace-separated list of stages> <Number of times to repeat stage>")
-    elif len(sys.argv) >= 2:
         try:
             if (sys.argv[1] == 'cat'):
                 catLodgeTasks()
