@@ -149,6 +149,9 @@ def repeat_stage(window, sct, fleet, iterations, boss=None, normal=True, stage="
         if boss is not None:
             selectSecondSurfaceFleet(boss)
             assignFleetRoles()
+    else:
+        # In case something broke when tinkering with Hard Mode fleet composition
+        assignFleetRoles()
     TwoKeyCombo('LCTRL', 'G')
     timebox = stageMetadata[1]
     repeatStage(window, sct, int(iterations), timebox)
@@ -248,6 +251,7 @@ if __name__ == '__main__':
             combined(sys.argv[1], sys.argv[2], sys.argv[3])
         except IndexError:
             print(f"Usage: {sys.argv[0]} <Stage or whitespace-separated list of stages> <Mob/boss fleet number> <Number of times to repeat stage>")
+    else:
         try:
             if (sys.argv[1] == 'cat'):
                 catLodgeTasks()
