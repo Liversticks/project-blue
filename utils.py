@@ -10,29 +10,40 @@ def copyControlsFile(file_path):
     dest = os.path.join(cwd, controls_file_name)
     shutil.copy(file_path, dest)
 
-def startExecutable(file_path, args):
+def startExecutable(file_path):
+    cwd = os.getcwd()
+    fp = os.path.join(cwd, file_path)
     in_args = []
-    in_args.append(file_path)
-    in_args.extend(args)
-
+    in_args.append(fp)
+    # print(in_args)
     subprocess.run(in_args)
+
+def trim_newlines(line):
+    if line[-1] == '\n':
+        return line[:-1]
+    return line
+
+def get_exec_args(raw_lines):
+    ret = []
+    for item in raw_lines:
+        ret.append(trim_newlines(item))
+    return ret
 
 def main(task):
     with open('./secrets.txt') as s:
         # Current format:
         # Line 1: path to Bluestacks controls file
-        # Line 2: path to Bluestacks executable
-        # Lines 3-n: arguments needed for Bluestacks
+        # Line 2: start script
+        # Note: no quotations around file paths please
         lines = s.readlines()
 
-        config_file_path = lines[0]
-        executable_path = lines[1]
-        executable_args = lines[2:]
-        
+        config_file_path = trim_newlines(lines[0])
+        start_file_path = trim_newlines(lines[1])
+
         if task == 'controls':
             copyControlsFile(config_file_path)
         elif task == 'start':
-            startExecutable(executable_path, executable_args)
+            startExecutable(start_file_path)
         else:
             print("Unsupported task.")
 
