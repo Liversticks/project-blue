@@ -23,12 +23,6 @@ def trim_newlines(line):
         return line[:-1]
     return line
 
-def get_exec_args(raw_lines):
-    ret = []
-    for item in raw_lines:
-        ret.append(trim_newlines(item))
-    return ret
-
 def main(task):
     with open('./secrets.txt') as s:
         # Current format:
