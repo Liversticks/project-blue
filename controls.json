@@ -692,6 +692,7 @@
                         "mouseDown 70 44",
                         "wait 20",
                         "mouseUp",
+                        "wait 1000",
                         "",
                         ""
                     ],
