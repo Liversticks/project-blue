@@ -24,7 +24,7 @@ stageMap = {
     '4-2': (('LSHIFT', '5'), 7.5 * 60),
     '6-3': (('LSHIFT', '6'), 7.5 * 60),
     '6-4': (('LSHIFT', '7'), 9 * 60),
-    '7-3': (('LSHIFT', '8'), 9 * 60),
+    '7-3': (('LSHIFT', '8'), 10 * 60),
     '7-4': (('LSHIFT', '9'), 9 * 60),
     '8-1': (('LSHIFT', '1'), 10 * 60),
     '8-2': (('LSHIFT', 'Y'), 10 * 60),
@@ -190,6 +190,7 @@ def endRoutine(quick_retire=True):
         time.sleep(25)
     # Collect oil and coins
     KeyPress('H')
+    time.sleep(10)
 
 def combined(stage, mob_fleet, iterations, boss_fleet=None):
     if int(iterations) < 1:
