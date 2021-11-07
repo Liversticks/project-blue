@@ -54,6 +54,7 @@ def ReleaseKey(hexKeyCode):
     x = Input( ctypes.c_ulong(1), ii_ )
     ctypes.windll.user32.SendInput(1, ctypes.pointer(x), ctypes.sizeof(x))
 
+# These are SCAN codes, not virtual codes!
 keyMap = {
     '1': 0x02,
     '2': 0x03,
@@ -92,7 +93,11 @@ keyMap = {
     'N': 0x31,
     'M': 0x32,
     'LCTRL': 0x1D,
-    'LSHIFT': 0x2A
+    'LSHIFT': 0x2A,
+    'LALT': 0x38,
+    'ENTER': 0x1C,
+    'LARROW': 0x4B,
+    'RARROW': 0x4D
 }
 
 delay = 1.5
