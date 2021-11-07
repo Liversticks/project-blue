@@ -16,10 +16,163 @@ class StateMachine(Machine):
         KeyPress('H')
 
     def main_to_build(self):
-        KeyPress('C')
+        TwoKeyCombo('LCTRL', 'C')
 
     def main_to_quick_access(self):
         TwoKeyCombo('LCTRL', 'Q')
+
+    def battle_to_campaign(self):
+        KeyPress()
+
+    def battle_to_event(self):
+        KeyPress()
+
+    def battle_to_raids(self):
+        KeyPress()
+    
+    def battle_to_exercises(self):
+        KeyPress()
+
+    def to_chapter_1(self):
+        currentChapters = 14
+        for _ in range(currentChapters):
+            KeyPress('LARROW')
+
+    def to_next_chapter(self):
+        KeyPress('RARROW')
+
+    def enter_1_1(self):
+        TwoKeyCombo('LSHIFT', '1')
+    
+    def enter_1_2(self):
+        TwoKeyCombo('LSHIFT', '2')
+    
+    def enter_1_3(self):
+        TwoKeyCombo('LSHIFT', '3')
+    
+    def enter_1_4(self):
+        TwoKeyCombo('LSHIFT', '4')
+    
+    def enter_2_1(self):
+        TwoKeyCombo('LSHIFT', '5')
+    
+    def enter_2_2(self):
+        TwoKeyCombo('LSHIFT', '4')
+    
+    def enter_2_3(self):
+        TwoKeyCombo('LSHIFT', '2')
+    
+    def enter_2_4(self):
+        TwoKeyCombo('LSHIFT', '6')
+
+    def enter_3_1(self):
+        TwoKeyCombo('LSHIFT', '2')
+    
+    def enter_3_2(self):
+        TwoKeyCombo('LSHIFT', '1')
+    
+    def enter_3_3(self):
+        TwoKeyCombo('LSHIFT', '4')
+    
+    def enter_3_4(self):
+        TwoKeyCombo('LSHIFT', '7')
+
+    def enter_4_1(self):
+        TwoKeyCombo('LSHIFT', '8')
+    
+    def enter_4_2(self):
+        TwoKeyCombo('LSHIFT', '1')
+    
+    def enter_4_3(self):
+        TwoKeyCombo('LSHIFT', '3')
+    
+    def enter_4_4(self):
+        TwoKeyCombo('LSHIFT', '7')
+
+    def enter_5_1(self):
+        TwoKeyCombo('LSHIFT', '8')
+    
+    def enter_5_2(self):
+        TwoKeyCombo('LSHIFT', '3')
+    
+    def enter_5_3(self):
+        TwoKeyCombo('LSHIFT', '7')
+    
+    def enter_5_4(self):
+        # Not actually assigned right now
+        TwoKeyCombo('LSHIFT', '')
+
+    def enter_6_1(self):
+        TwoKeyCombo('LSHIFT', '3')
+    
+    def enter_6_2(self):
+        TwoKeyCombo('LSHIFT', '7')
+    
+    def enter_6_3(self):
+        TwoKeyCombo('LSHIFT', '2')
+    
+    def enter_6_4(self):
+        TwoKeyCombo('LSHIFT', '9')
+
+    def enter_7_1(self):
+        TwoKeyCombo('LSHIFT', '1')
+    
+    def enter_7_2(self):
+        TwoKeyCombo('LSHIFT', '4')
+    
+    def enter_7_3(self):
+        TwoKeyCombo('LSHIFT', '0')
+    
+    def enter_7_4(self):
+        TwoKeyCombo('LSHIFT', '5')
+
+    def enter_8_1(self):
+        TwoKeyCombo('LSHIFT', '2')
+    
+    def enter_8_2(self):
+        TwoKeyCombo('LSHIFT', '8')
+    
+    def enter_8_3(self):
+        TwoKeyCombo('LSHIFT', '6')
+    
+    def enter_8_4(self):
+        TwoKeyCombo('LSHIFT', '5')
+
+    def enter_9_1(self):
+        TwoKeyCombo('LSHIFT', '2')
+    
+    def enter_9_2(self):
+        TwoKeyCombo('LSHIFT', '1')
+    
+    def enter_9_3(self):
+        TwoKeyCombo('LSHIFT', '0')
+    
+    def enter_9_4(self):
+        TwoKeyCombo('LSHIFT', '3')
+
+    def enter_10_1(self):
+        TwoKeyCombo('LSHIFT', '2')
+    
+    def enter_10_2(self):
+        TwoKeyCombo('LSHIFT', '9')
+    
+    def enter_10_3(self):
+        TwoKeyCombo('LSHIFT', '3')
+    
+    def enter_10_4(self):
+        TwoKeyCombo('LSHIFT', '0')
+
+    def enter_11_1(self):
+        TwoKeyCombo('LSHIFT', '2')
+    
+    def enter_11_2(self):
+        TwoKeyCombo('LSHIFT', '6')
+    
+    def enter_11_3(self):
+        TwoKeyCombo('LSHIFT', '4')
+    
+    def enter_11_4(self):
+        TwoKeyCombo('LSHIFT', '5')
 
     def successful_clear(self):
         # TODO: check if the clearing rewards are displayed
@@ -131,7 +284,7 @@ class StateMachine(Machine):
             { 'trigger': 'to_event', 'source': 'main-menu', 'dest': 'current-event-*', 'before': 'main_to_event' },
             { 'trigger': 'to_build', 'source': 'main-menu', 'dest': 'build-*', 'before': 'main_to_build' },
             { 'trigger': 'to_hq', 'source': 'main-menu', 'dest': 'hq', 'before': 'main_to_hq' },
-            { 'trigger': 'to_quick_access', 'source': 'main-menu', 'dest': 'quick-access' },
+            { 'trigger': 'to_quick_access', 'source': 'main-menu', 'dest': 'quick-access', 'before': 'main_to_quick_access' },
             { 'trigger': 'to_main_menu', 'source': [
                 'quick-access',
                 'hq',
@@ -173,25 +326,25 @@ class StateMachine(Machine):
             { 'trigger': 'to_dorm', 'source': 'hq', 'dest': 'dorm' },
             { 'trigger': 'to_cattery', 'source': 'hq', 'dest': 'cattery' },
             # Battle menu
-            { 'trigger': 'to_campaign', 'source': 'battle', 'dest': 'chapter-normal-*', 'before': 'go_to_battle' },
-            { 'trigger': 'to_event', 'source': 'battle', 'dest': 'current-event-*', 'before': 'go_to_event' },
-            { 'trigger': 'to_exercises', 'source': 'battle', 'dest': 'exercises-overview' },
-            { 'trigger': 'to_daily_raids', 'source': 'battle', 'dest': 'daily-raids' },
+            { 'trigger': 'to_campaign', 'source': 'battle', 'dest': 'chapter-normal-*', 'before': 'battle_to_campaign' },
+            { 'trigger': 'to_event', 'source': 'battle', 'dest': 'current-event-*', 'before': 'battle_to_event' },
+            { 'trigger': 'to_exercises', 'source': 'battle', 'dest': 'exercises-overview', 'before': 'battle_to_exercises' },
+            { 'trigger': 'to_daily_raids', 'source': 'battle', 'dest': 'daily-raids', 'before': 'battle_to_raids' },
             # Campaign stages
-            { 'trigger': 'to_chapter_1', 'source': 'chapter-normal-*', 'dest': 'chapter-normal-1' },
-            { 'trigger': 'next_chapter', 'source': 'chapter-normal-1', 'dest': 'chapter-normal-2' },
-            { 'trigger': 'next_chapter', 'source': 'chapter-normal-2', 'dest': 'chapter-normal-3' },
-            { 'trigger': 'next_chapter', 'source': 'chapter-normal-3', 'dest': 'chapter-normal-4' },
-            { 'trigger': 'next_chapter', 'source': 'chapter-normal-4', 'dest': 'chapter-normal-5' },
-            { 'trigger': 'next_chapter', 'source': 'chapter-normal-5', 'dest': 'chapter-normal-6' },
-            { 'trigger': 'next_chapter', 'source': 'chapter-normal-6', 'dest': 'chapter-normal-7' },
-            { 'trigger': 'next_chapter', 'source': 'chapter-normal-7', 'dest': 'chapter-normal-8' },
-            { 'trigger': 'next_chapter', 'source': 'chapter-normal-8', 'dest': 'chapter-normal-9' },
-            { 'trigger': 'next_chapter', 'source': 'chapter-normal-9', 'dest': 'chapter-normal-10' },
-            { 'trigger': 'next_chapter', 'source': 'chapter-normal-10', 'dest': 'chapter-normal-11' },
-            { 'trigger': 'next_chapter', 'source': 'chapter-normal-11', 'dest': 'chapter-normal-12' },
-            { 'trigger': 'next_chapter', 'source': 'chapter-normal-12', 'dest': 'chapter-normal-13' },
-            { 'trigger': 'next_chapter', 'source': 'chapter-normal-13', 'dest': 'chapter-normal-14' },
+            { 'trigger': 'to_chapter_1', 'source': 'chapter-normal-*', 'dest': 'chapter-normal-1', 'before': 'to_chapter_1' },
+            { 'trigger': 'next_chapter', 'source': 'chapter-normal-1', 'dest': 'chapter-normal-2', 'before': 'to_next_chapter' },
+            { 'trigger': 'next_chapter', 'source': 'chapter-normal-2', 'dest': 'chapter-normal-3', 'before': 'to_next_chapter' },
+            { 'trigger': 'next_chapter', 'source': 'chapter-normal-3', 'dest': 'chapter-normal-4', 'before': 'to_next_chapter' },
+            { 'trigger': 'next_chapter', 'source': 'chapter-normal-4', 'dest': 'chapter-normal-5', 'before': 'to_next_chapter' },
+            { 'trigger': 'next_chapter', 'source': 'chapter-normal-5', 'dest': 'chapter-normal-6', 'before': 'to_next_chapter' },
+            { 'trigger': 'next_chapter', 'source': 'chapter-normal-6', 'dest': 'chapter-normal-7', 'before': 'to_next_chapter' },
+            { 'trigger': 'next_chapter', 'source': 'chapter-normal-7', 'dest': 'chapter-normal-8', 'before': 'to_next_chapter' },
+            { 'trigger': 'next_chapter', 'source': 'chapter-normal-8', 'dest': 'chapter-normal-9', 'before': 'to_next_chapter' },
+            { 'trigger': 'next_chapter', 'source': 'chapter-normal-9', 'dest': 'chapter-normal-10', 'before': 'to_next_chapter' },
+            { 'trigger': 'next_chapter', 'source': 'chapter-normal-10', 'dest': 'chapter-normal-11', 'before': 'to_next_chapter' },
+            { 'trigger': 'next_chapter', 'source': 'chapter-normal-11', 'dest': 'chapter-normal-12', 'before': 'to_next_chapter' },
+            { 'trigger': 'next_chapter', 'source': 'chapter-normal-12', 'dest': 'chapter-normal-13', 'before': 'to_next_chapter' },
+            { 'trigger': 'next_chapter', 'source': 'chapter-normal-13', 'dest': 'chapter-normal-14', 'before': 'to_next_chapter' },
             # prev_chapter is unnecessary because of to_chapter_1
             { 'trigger': 'to_hard', 'source': 'chapter-normal-1', 'dest': 'chapter-hard-1' },
             { 'trigger': 'to_hard', 'source': 'chapter-normal-2', 'dest': 'chapter-hard-2' },
@@ -275,4 +428,4 @@ class StateMachine(Machine):
             { 'trigger': 'finish_combat', 'source': 'combat', 'dest': None, 'conditions': 'not_clear_yet' },
         ]
 
-        Machine.__init__(self, states=states, transitions=transitions, initial='main-menu')
+        Machine.__init__(self, states=states, transitions=transitions, initial='main-menu', auto_transitions=False)
