@@ -51,8 +51,46 @@ Ideas:
     - Screenshot utility (since it should only be opened infrequently)
 - Configuration for states and transitions should be done in files that can be read in (so on updates, only those need to be updated)
 
+## List of transitions
+
+- Any state --> disconnected
+- Login --> main menu
+- Main menu --> quick access (commissions, academy, lab)
+- Main menu --> cat lodge
+- Main menu --> Retire
+- Main menu --> Event stages (if available)
+- Main menu --> Battle
+- Battle --> Campaign normal
+- Battle --> Exercises
+- Battle --> Event (backup)
+- Battle --> Commissions (backup)
+- Battle --> OpSi (when will this be used?)
+- Event * --> Event SP
+- Event SP --> Event Hard
+- Event Hard --> Event Normal
+- Campaign chapter N --> chapter N-1
+- Campaign chapter N --> chapter N+1
+- Campaign chapter N --> stage normal* info
+- Stage normal* info --> Combat
+    - Select fleet for slot 1
+    - Select fleet for slot 2
+    - Select submarine fleet
+    - Assign roles
+    - Set a High Performance Report
+- Combat --> Stage complete
+- Combat --> Defeat
+- Stage complete --> Combat
+    - Set report
+- Stage complete --> Campaign chapter N or Event *
+- Exercises --> Exercises select opponent
+- Exercises select opponent --> Exercises select fleet
+- Exercises select fleet --> Exercises combat
+- Exercises combat --> Exercises victory
+- Exercises combat --> Exercises defeat
+- Exercises result --> Exercises
+
 # Utilities
-- Screenshot helper:
+- Screenshot helper (done):
     - Takes a screenshot of the application and saves it to the specified path
 - Control files copy (done)
 
