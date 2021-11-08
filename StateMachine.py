@@ -231,7 +231,7 @@ class StateMachine(Machine):
         return False
 
     def not_clear_yet(self, event):
-        return (not self.successful_clear()) and (not self.defeated()) 
+        return (not self.successful_clear()) and self.defeated() 
 
     def go_exit_stage(self, event):
         TwoKeyCombo('LCTRL', 'B')
