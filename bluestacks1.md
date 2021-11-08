@@ -13,10 +13,10 @@
 - CTRL + C: Build menu
 
 ## Battle
-- Campaign
-- Event
-- Daily Raids
-- Exercises
+- CTRL + A: Campaign
+- V: Event
+- CTRL + D: Daily Raids
+- CTRL + E: Exercises
 - Operation Siren
 
 ## Campaign
@@ -39,11 +39,18 @@
 - G: Go to Fleet Selection
 - ENTER: Enter combat
 - C: Choose fleet for first surface slot
+- ALT + C: Choose fleet for second surface slot
+- SHIFT + C: Clear second surface slot
 - 1: Choose fleet 1 (surface 1)
 - 2: Choose fleet 2 (surface 1), clear surface 2 slot
-- 3: Choose fleet 3 (surface 1), choose fleet for second surface slot
+- 3: Choose fleet 3 (surface 1)
 - 4: Choose fleet 4 (surface 1), choose fleet 1 (surface 2)
 - 5: Choose fleet 5 (surface 1), choose fleet 2 (surface 2)
 - 6: Choose fleet 6 (surface 1), choose fleet 3 (surface 2)
 - 7: Choose fleet 4 (surface 2)
 - 8: Choose fleet 5 (surface 2)
+- 9: Choose fleet 6 (surface 2)
+- O: Assign mobbing to Fleet 1 and boss to Fleet 2
+- P: Toggle High Efficiency Combat Logistics Plan in fleet selection
+- SHIFT + P: Use a HECLP for further clears
+- CTRL + ENTER: Continue same stage
