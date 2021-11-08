@@ -1,0 +1,14 @@
+aiohttp==3.7.4.post0
+async-timeout==3.0.1
+attrs==21.2.0
+chardet==4.0.0
+discord==1.7.3
+discord.py==1.7.3
+idna==3.2
+mss==6.1.0
+multidict==5.1.0
+pywin32==301
+six==1.16.0
+transitions==0.8.10
+typing-extensions==3.10.0.2
+yarl==1.6.3
