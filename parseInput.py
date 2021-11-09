@@ -2,9 +2,51 @@ import argparse
 import sys
 
 def main(args):
-
+    modes = ['battle', 'cat']
+    
     parser = argparse.ArgumentParser(
         description='Automatic AL grinding using a state machine.'
+    )
+    parser.add_argument('mode',
+        choices=modes,
+        help='Supported modes: %(choices)s'
+    )
+
+    preliminary = parser.parse_args(args[0:1])
+    if (preliminary.mode == 'battle'):
+        campaign_or_event(args[1:])
+    else:
+        cat_lodge(args[1:])
+
+def cat_lodge(args):
+    parser = argparse.ArgumentParser(
+        prog=f'{sys.argv[0]} cat',
+        description='Cat lodge submenu: handles Meowfficer and cat lodge tasks.'
+    )
+
+    # buy-box - optional (flag, defaults to false)
+    parser.add_argument('-bb', '--buy-box', action='store_true',
+        help='Whether to buy 1 cat box (defaults to False).'
+    )
+
+    # forts - optional (flag, defaults to true)
+    parser.add_argument('-f', '--forts', action='store_false',
+        help='Whether to perform daily tasks in the Comf-Forts (defaults to True, but only executed once per day)'
+    )
+
+    # queue - optional (flag, defaults to true)
+    parser.add_argument('-q', '--queue', action='store_false',
+        help='Whether to empty the trained Meowfficer and queue new Cat Boxes.'
+    )
+
+    a = parser.parse_args(args)
+    print(a)
+
+
+def campaign_or_event(args):
+    parser = argparse.ArgumentParser(
+        prog=f'{sys.argv[0]} battle',
+        description='Battle submenu: handles clearing campaign and event stages.'
     )
 
     # stage - required (string or list of strings)
@@ -22,7 +64,7 @@ def main(args):
         help='First fleet number (integer from 1 to 6 for Normal Mode stages)'
     )
     # fleet2 - optional (int 0 or 1-6)
-    parser.add_argument('-f2', '--fleet2', nargs=1, default=2, type=int,
+    parser.add_argument('-f2', '--fleet2', nargs=1, default=None, type=int,
         help='Second fleet number (integer from 1 to 6 for Normal Mode stages). Cannot be the same as -f1/--fleet1.'
     )
     # sub - optional (int 0 or 1-2)
@@ -39,18 +81,14 @@ def main(args):
 
     # qr - optional (flag, will Quick Retire blue and grays using existing settings)
 
-    # Cat lodge
-    # cat - required
-    # buy-box - optional (flag, defaults to false)
-    # forts - optional (flag, defaults to true)
-    # queue - optional (flag, defaults to true)
+
 
     # Daily raids
     # raids - required (will do as many as possible, but needs external state)
 
     # Import procedures and run machine
-    a = parser.parse_args(args[1:])
+    a = parser.parse_args(args)
     print(a)
 
 if __name__ == '__main__':
-    main(sys.argv)
+    main(sys.argv[1:])
