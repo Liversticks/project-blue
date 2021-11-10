@@ -1,6 +1,5 @@
 from StateMachine import StateMachine
 from windowManager import WindowMgr
-import sys
 import mss
 
 def main():
