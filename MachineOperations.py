@@ -241,3 +241,27 @@ class MachineOperations():
 
     def set_another_heclp(self, event):
         TwoKeyCombo('LSHIFT', 'P')
+
+    def event_to_SP(self, event):
+        TwoKeyCombo()
+    
+    def hard_mode_toggle(self, event):
+        KeyPress()
+
+    def enter_AC_1(self, event):
+        TwoKeyCombo('LSHIFT', '')
+
+    def enter_AC_2(self, event):
+        TwoKeyCombo('LSHIFT', '')
+    
+    def enter_AC_3(self, event):
+        TwoKeyCombo('LSHIFT', '')
+    
+    def enter_BD_1(self, event):
+        TwoKeyCombo('LSHIFT', '')
+    
+    def enter_BD_2(self, event):
+        TwoKeyCombo('LSHIFT', '')
+    
+    def enter_BD_3(self, event):
+        TwoKeyCombo('LSHIFT', '')
