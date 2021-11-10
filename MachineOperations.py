@@ -4,7 +4,7 @@ import datetime
 import mss.tools
 
 class MachineOperations():
-    # Based on the controls - see bluestacks.md
+    # Based on the controls - see bluestacks1.md
     def go_to_main_menu(self, event):
         TwoKeyCombo('LCTRL', 'H')
     
@@ -210,10 +210,10 @@ class MachineOperations():
 
     def set_timer(self, event):
         KeyPress('ENTER')
-        stage = event.kwargs.get('stage', '1-1')
-        print(stage)
+        self.stage = event.kwargs.get('stage', '1-1')
+        print(self.stage)
         # Lookup the timing
-        time.sleep(60 * 6)
+        time.sleep(60 * 12)
         now = datetime.datetime.now()
         date_string = now.strftime(self.date_to_file_format)
         filename = self.screenshot_directory + date_string + '.png'
@@ -237,6 +237,7 @@ class MachineOperations():
 
     def go_continue_stage(self, event):
         TwoKeyCombo('LCTRL', 'ENTER')
+        # TODO: actually repeat the timer
 
     def set_another_heclp(self, event):
         TwoKeyCombo('LSHIFT', 'P')
