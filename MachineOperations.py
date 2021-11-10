@@ -38,8 +38,11 @@ class MachineOperations():
     def go_chapter_1(self, event):
         currentChapters = 14
         for _ in range(currentChapters):
-            KeyPress('LARROW')
+            self.to_previous_chapter(event)
 
+    def to_previous_chapter(self, event):
+        KeyPress('LARROW')
+    
     def to_next_chapter(self, event):
         KeyPress('RARROW')
 
