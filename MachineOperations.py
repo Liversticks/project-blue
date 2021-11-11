@@ -208,10 +208,7 @@ class MachineOperations():
     date_to_file_format = '%d-%m-%Y %H_%M_%S'
     screenshot_directory = './screenshots/'
 
-    def set_timer(self, event):
-        KeyPress('ENTER')
-        self.stage = event.kwargs.get('stage', '1-1')
-        print(self.stage)
+    def time_and_screenshot(self):
         # Lookup the timing
         time.sleep(60 * 12)
         now = datetime.datetime.now()
@@ -220,6 +217,13 @@ class MachineOperations():
         coordinates = self.window.get_window_coordinates()
         image = self.sct.grab(coordinates)
         mss.tools.to_png(image.rgb, image.size, output=filename)
+    
+    def start_stage(self, event):
+        KeyPress('ENTER')
+        self.stage = event.kwargs.get('stage', '1-1')
+        print(self.stage)
+        self.time_and_screenshot()
+        
 
     def successful_clear(self, event):
         # TODO: check if the clearing rewards are displayed
@@ -237,7 +241,7 @@ class MachineOperations():
 
     def go_continue_stage(self, event):
         TwoKeyCombo('LCTRL', 'ENTER')
-        # TODO: actually repeat the timer
+        self.time_and_screenshot()
 
     def set_another_heclp(self, event):
         TwoKeyCombo('LSHIFT', 'P')

@@ -228,7 +228,7 @@ class StateMachine(Machine, MachineOperations):
             { 'trigger': 'clear_2', 'source': 'select-fleet', 'dest': None, 'before': 'clear_2_fleet' },
             { 'trigger': 'set_roles', 'source': 'select-fleet', 'dest': None, 'before': 'set_fleet_roles' },
             { 'trigger': 'toggle_heclp', 'source': 'select-fleet', 'dest': None, 'before': 'toggle_heclp_start' },
-            { 'trigger': 'enter_combat', 'source': 'select-fleet', 'dest': 'combat', 'before': 'set_timer' },
+            { 'trigger': 'enter_combat', 'source': 'select-fleet', 'dest': 'combat', 'before': 'start_stage' },
             # TODO: some way to detect whether we finish in Normal or Hard Mode
             { 'trigger': 'finish_combat', 'source': 'combat', 'dest': 'stage-clear', 'conditions': 'successful_clear' },
             { 'trigger': 'finish_combat', 'source': 'combat', 'dest': 'stage-defeat', 'conditions': 'defeated' },
