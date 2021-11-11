@@ -219,6 +219,21 @@ class StateMachine(Machine, MachineOperations):
             { 'trigger': 'enter_3', 'source': ['chapter-normal-11', 'chapter-hard-11'], 'dest': 'enter-stage', 'before': 'enter_11_3' },
             { 'trigger': 'enter_4', 'source': ['chapter-normal-11', 'chapter-hard-11'], 'dest': 'enter-stage', 'before': 'enter_11_4' },
             # TODO: triggers for entering chapter 12-14 normal stages
+            # Event stages
+            { 'trigger': 'to_SP', 'source': 'current-event-*', 'dest': 'current-event-SP', 'before': 'event_to_SP' },
+            { 'trigger': 'to_D', 'source': 'current-event-SP', 'dest': 'current-event-D', 'before': 'event_to_SP' },
+            { 'trigger': 'to_B', 'source': 'current-event-SP', 'dest': 'current-event-B', 'before': 'hard_mode_toggle' },
+            { 'trigger': 'to_C', 'source': 'current-event-D', 'dest': 'current-event-C', 'before': 'to_previous_chapter' },
+            { 'trigger': 'to_A', 'source': 'current-event-B', 'dest': 'current-event-A', 'before': 'to_previous_chapter' },
+            { 'trigger': 'enter_1', 'source': ['current-event-A', 'current-event-C'], 'dest': 'enter-stage', 'before': '' },
+            { 'trigger': 'enter_2', 'source': ['current-event-A', 'current-event-C'], 'dest': 'enter-stage', 'before': '' },
+            { 'trigger': 'enter_3', 'source': ['current-event-A', 'current-event-C'], 'dest': 'enter-stage', 'before': '' },
+            { 'trigger': 'enter_1', 'source': ['current-event-B', 'current-event-D'], 'dest': 'enter-stage', 'before': '' },
+            { 'trigger': 'enter_2', 'source': 'current-event-B', 'dest': 'enter-stage', 'before': '' },
+            { 'trigger': 'enter_2', 'source': 'current-event-D', 'dest': 'enter-stage', 'before': '' },
+            { 'trigger': 'enter_3', 'source': ['current-event-B', 'current-event-D'], 'dest': 'enter-stage', 'before': '' },
+            # TODO: War Archive stages
+            
             # Normal mode fleet selection
             # Hard mode requires manually pre-selecting the fleets (which are the same for the entire chapter)
             { 'trigger': 'to_select_fleet', 'source': 'enter-stage', 'dest': 'select-fleet', 'before': 'go_select_fleet' },
