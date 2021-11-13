@@ -42,6 +42,8 @@
 - Shift + E: A2
 - Shift + Y: B1
 - Shift + T: B2
+- Shift + U: SP2
+- Shift + I: SP3
 
 ## Main Menu Tasks
 - R: Quick Retire (NOTE: depends on whether there is a Limited building slot)

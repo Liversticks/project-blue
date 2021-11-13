@@ -54,3 +54,15 @@
 - P: Toggle High Efficiency Combat Logistics Plan in fleet selection
 - SHIFT + P: Use a HECLP for further clears
 - CTRL + ENTER: Continue same stage
+
+## Event
+- Shift + Z: A1/C1
+- Shift + Y: A2/C2
+- Shift + X: A3/C3
+- Shift + W: B1/D1
+- Shift + V: B2
+- Shift + U: D2
+- Shift + T: B3/D3
+- Shift + S: SP1
+- Shift + R: SP2
+- Shift + Q: SP3
