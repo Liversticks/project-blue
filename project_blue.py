@@ -50,10 +50,14 @@ stageMap = {
     'C3': (('LSHIFT', 'W'), 10 * 60),
     'D1': (('LSHIFT', 'Q'), 10 * 60),
     'D2': (('LSHIFT', '5'), 12 * 60),
-    'D3': (('LSHIFT', 'W'), 12 * 60)
+    'D3': (('LSHIFT', 'W'), 12 * 60),
+    'SP1': (('LSHIFT', '5'), 6 * 60),
+    'SP2': (('LSHIFT', 'U'), 6 * 60),
+    'SP3': (('LSHIFT', 'I'), 8 * 60)
 }
 
 eventPrefix = ['A', 'B', 'C', 'D']
+eventSPPrefix = 'SP'
 eventString = 'event'
 eventHardString = 'event-hard'
 
@@ -135,6 +139,8 @@ def repeat_stage(window, sct, fleet, iterations, boss=None, normal=True, stage="
     if stage[0] in eventPrefix:
         goToEvent(normal)
         goToEventChapter(stage[0])
+    elif stage[0:2] == eventSPPrefix:
+        goToEvent(normal, sp=True)
     else:
         enterCampaignMode()
         chapter = int(getChapter.match(stage).group(1))
@@ -157,14 +163,15 @@ def repeat_stage(window, sct, fleet, iterations, boss=None, normal=True, stage="
     repeatStage(window, sct, int(iterations), timebox)
     returnToMainMenu()
 
-def goToEvent(normal=False):
+def goToEvent(normal=False, sp=False):
     KeyPress('V')
     time.sleep(1)
-    KeyPress('E')
-    KeyPress('E')
-    if normal:
-        time.sleep(1)
-        KeyPress('I')    
+    if not sp:
+        KeyPress('E')
+        KeyPress('E')
+        if normal:
+            time.sleep(1)
+            KeyPress('I')    
 
 def goToEventChapter(prefix):
     KeyPress('P')
