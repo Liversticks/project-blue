@@ -225,13 +225,16 @@ class StateMachine(Machine, MachineOperations):
             { 'trigger': 'to_B', 'source': 'current-event-SP', 'dest': 'current-event-B', 'before': 'hard_mode_toggle' },
             { 'trigger': 'to_C', 'source': 'current-event-D', 'dest': 'current-event-C', 'before': 'to_previous_chapter' },
             { 'trigger': 'to_A', 'source': 'current-event-B', 'dest': 'current-event-A', 'before': 'to_previous_chapter' },
-            { 'trigger': 'enter_1', 'source': ['current-event-A', 'current-event-C'], 'dest': 'enter-stage', 'before': '' },
-            { 'trigger': 'enter_2', 'source': ['current-event-A', 'current-event-C'], 'dest': 'enter-stage', 'before': '' },
-            { 'trigger': 'enter_3', 'source': ['current-event-A', 'current-event-C'], 'dest': 'enter-stage', 'before': '' },
-            { 'trigger': 'enter_1', 'source': ['current-event-B', 'current-event-D'], 'dest': 'enter-stage', 'before': '' },
-            { 'trigger': 'enter_2', 'source': 'current-event-B', 'dest': 'enter-stage', 'before': '' },
-            { 'trigger': 'enter_2', 'source': 'current-event-D', 'dest': 'enter-stage', 'before': '' },
-            { 'trigger': 'enter_3', 'source': ['current-event-B', 'current-event-D'], 'dest': 'enter-stage', 'before': '' },
+            { 'trigger': 'enter_1', 'source': ['current-event-A', 'current-event-C'], 'dest': 'enter-stage', 'before': 'enter_AC_1' },
+            { 'trigger': 'enter_2', 'source': ['current-event-A', 'current-event-C'], 'dest': 'enter-stage', 'before': 'enter_AC_2' },
+            { 'trigger': 'enter_3', 'source': ['current-event-A', 'current-event-C'], 'dest': 'enter-stage', 'before': 'enter_AC_3' },
+            { 'trigger': 'enter_1', 'source': ['current-event-B', 'current-event-D'], 'dest': 'enter-stage', 'before': 'enter_BD_1' },
+            { 'trigger': 'enter_2', 'source': 'current-event-B', 'dest': 'enter-stage', 'before': 'enter_B_2' },
+            { 'trigger': 'enter_2', 'source': 'current-event-D', 'dest': 'enter-stage', 'before': 'enter_D_2' },
+            { 'trigger': 'enter_3', 'source': ['current-event-B', 'current-event-D'], 'dest': 'enter-stage', 'before': 'enter_BD_3' },
+            { 'trigger': 'enter_1', 'source': 'current-event-*', 'dest': 'enter-stage', 'before': 'enter_SP_1', 'conditions': 'is_event_SP' },
+            { 'trigger': 'enter_2', 'source': 'current-event-*', 'dest': 'enter-stage', 'before': 'enter_SP_2', 'conditions': 'is_event_SP' },
+            { 'trigger': 'enter_3', 'source': 'current-event-*', 'dest': 'enter-stage', 'before': 'enter_SP_3', 'conditions': 'is_event_SP' },
             # TODO: War Archive stages
             
             # Normal mode fleet selection
