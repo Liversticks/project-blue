@@ -249,6 +249,7 @@ class MachineOperations():
     def set_another_heclp(self, event):
         TwoKeyCombo('LSHIFT', 'P')
 
+    # TODO: unimplemented for now (11/11/21)
     def event_to_SP(self, event):
         TwoKeyCombo()
     
@@ -256,19 +257,35 @@ class MachineOperations():
         KeyPress()
 
     def enter_AC_1(self, event):
-        TwoKeyCombo('LSHIFT', '')
+        TwoKeyCombo('LSHIFT', 'Z')
 
     def enter_AC_2(self, event):
-        TwoKeyCombo('LSHIFT', '')
+        TwoKeyCombo('LSHIFT', 'Y')
     
     def enter_AC_3(self, event):
-        TwoKeyCombo('LSHIFT', '')
+        TwoKeyCombo('LSHIFT', 'X')
     
     def enter_BD_1(self, event):
-        TwoKeyCombo('LSHIFT', '')
+        TwoKeyCombo('LSHIFT', 'W')
     
-    def enter_BD_2(self, event):
-        TwoKeyCombo('LSHIFT', '')
+    def enter_B_2(self, event):
+        TwoKeyCombo('LSHIFT', 'V')
     
+    def enter_D_2(self, event):
+        TwoKeyCombo('LSHIFT', 'U')
+
+    def is_event_SP(self, event):
+        # TODO: DB flags based on event timing
+        return True
+
     def enter_BD_3(self, event):
-        TwoKeyCombo('LSHIFT', '')
+        TwoKeyCombo('LSHIFT', 'T')
+    
+    def enter_SP_1(self, event):
+        TwoKeyCombo('LSHIFT', 'S')
+    
+    def enter_SP_2(self, event):
+        TwoKeyCombo('LSHIFT', 'R')
+
+    def enter_SP_3(self, event):
+        TwoKeyCombo('LSHIFT', 'Q')
