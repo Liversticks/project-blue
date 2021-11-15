@@ -51,6 +51,14 @@ Ideas:
     - Screenshot utility (since it should only be opened infrequently)
 - Configuration for states and transitions should be done in files that can be read in (so on updates, only those need to be updated)
 
+## DB schema
+
+Stage:
+- ID integer
+- is_hard bool flag
+- Stage string
+- Maximum clear time
+
 ## List of transitions
 
 - Any state --> disconnected
