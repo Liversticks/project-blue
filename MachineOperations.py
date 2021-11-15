@@ -212,8 +212,7 @@ class MachineOperations():
     screenshot_directory = './screenshots/'
 
     def time_and_screenshot(self):
-        # Lookup the timing
-        time.sleep(60 * 12)
+        time.sleep(self.clear_time)
         now = datetime.datetime.now()
         date_string = now.strftime(self.date_to_file_format)
         filename = self.screenshot_directory + date_string + '.png'
@@ -223,10 +222,8 @@ class MachineOperations():
     
     def start_stage(self, event):
         KeyPress('ENTER')
-        self.stage = event.kwargs.get('stage', '1-1')
-        print(self.stage)
+        self.clear_time = event.kwargs.get('clear_time', 600)
         self.time_and_screenshot()
-        
 
     def successful_clear(self, event):
         # TODO: check if the clearing rewards are displayed
@@ -249,7 +246,7 @@ class MachineOperations():
     def set_another_heclp(self, event):
         TwoKeyCombo('LSHIFT', 'P')
 
-    # TODO: unimplemented for now (11/11/21)
+    # TODO: unimplemented in BlueStacks for now (11/11/21)
     def event_to_SP(self, event):
         TwoKeyCombo()
     
@@ -289,3 +286,13 @@ class MachineOperations():
 
     def enter_SP_3(self, event):
         TwoKeyCombo('LSHIFT', 'Q')
+
+    def to_daily_raids_list(self, event):
+        KeyPress('D')
+
+    def go_quick_attack(self, event):
+        option = event.kwargs.get('option', '1')
+        TwoKeyCombo('LCTRL', option)
+        TwoKeyCombo('LALT', 'D')
+        # time.sleep(1)
+        KeyPress('A')
