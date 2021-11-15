@@ -1,6 +1,6 @@
-from BattleEngine import BattleEngine
-from CatEngine import CatEngine
-from RaidEngine import RaidEngine
+from engines.BattleEngine import BattleEngine
+from engines.CatEngine import CatEngine
+from engines.RaidEngine import RaidEngine
 from mss import mss
 
 def run_battle(options):
@@ -10,7 +10,7 @@ def run_battle(options):
         be.cleanup()
 
 def run_cat(options):
-    print()
+    print(options)
 
 def run_raid(options):
     re = RaidEngine(None)

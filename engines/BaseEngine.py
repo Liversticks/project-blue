@@ -1,5 +1,5 @@
-from windowManager import WindowMgr
-from StateMachine import StateMachine
+from infra.windowManager import WindowMgr
+from machine.StateMachine import StateMachine
 
 class BaseEngine():
 

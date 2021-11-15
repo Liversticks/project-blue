@@ -1,4 +1,4 @@
-from inputKeys import KeyPress, TwoKeyCombo
+from infra.inputKeys import KeyPress, TwoKeyCombo
 import time
 import datetime
 import mss.tools

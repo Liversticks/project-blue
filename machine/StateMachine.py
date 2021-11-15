@@ -1,5 +1,5 @@
 from transitions import Machine
-from MachineOperations import MachineOperations
+from machine.MachineOperations import MachineOperations
 
 class StateMachine(Machine, MachineOperations):
     def __init__(self, window, sct):
@@ -280,3 +280,4 @@ class StateMachine(Machine, MachineOperations):
         ]
 
         Machine.__init__(self, states=states, transitions=transitions, initial='main-menu', auto_transitions=False, send_event=True)
+        MachineOperations.__init__(self)

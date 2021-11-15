@@ -1,4 +1,4 @@
-from BaseEngine import BaseEngine
+from engines.BaseEngine import BaseEngine
 import sqlite3 as sql
 
 class BattleEngine(BaseEngine):
