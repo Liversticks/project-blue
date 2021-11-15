@@ -4,6 +4,7 @@
 - Press twice to login
 
 ## Main menu
+- A: Free click
 - CTRL + B: Back
 - CTRL + Q: Quick access submenu
 - CTRL + H: Home
@@ -66,3 +67,10 @@
 - Shift + S: SP1
 - Shift + R: SP2
 - Shift + Q: SP3
+
+## Daily Raids
+- D: select Daily Raids submenu
+- CTRL + 1: Top option
+- CTRL + 2: Middle option
+- CTRL + 3: Bottom option
+- Alt + D: Quick Attack
