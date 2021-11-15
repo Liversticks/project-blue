@@ -3,7 +3,7 @@ import sys
 import re
 import RunMachine as rm
 
-stage_re = re.compile('event(-hard)?|1[0-4]-[1-4]|[1-9]-[1-4]|[A-D]-[1-3]')
+stage_re = re.compile('event(-hard)?|1[0-4]-[1-4]|[1-9]-[1-4]|([A-D]|SP)-[1-3]')
 
 class InvalidStageError(Exception): pass
 
@@ -49,7 +49,7 @@ def validate_campaign_or_event(args):
         print("EVENT STAGES:")
         print("event - Normal Mode event stages")
         print("event-hard - Hard Mode event stages")
-        print("X-Y : X = Chapter number (A, B, C, D); Y = stage number (1 - 3)")
+        print("X-Y : X = Chapter number (A, B, C, D, SP); Y = stage number (1 - 3)")
         print()
         print("NORMAL STAGES:")
         print("X-Y : X = Chapter number (1 - 14); Y = stage number (1 - 4)")
@@ -62,6 +62,9 @@ def validate_campaign_or_event(args):
         raise ValidationError
 
 def validate_cat(args):
+    pass
+
+def validate_raid(args):
     pass
 
 def parse_arguments(args):
@@ -117,6 +120,17 @@ def parse_arguments(args):
     )
     parser_c.set_defaults(validate=validate_cat, run=rm.run_cat)
 
+    ## DAILY RAID OPTIONS
+
+    parser_d = subparsers.add_parser('raid',
+        description='Daily raid submenu: handles once-a-day Daily Raids'
+    )
+
+    parser_d.add_argument('-s', '--sub', action='store_true',
+        help='Whether to do once-a-week Supply Line Disruption (defaults to False)'
+    )
+    parser_d.set_defaults(validate=validate_raid, run=rm.run_raid)
+
     preliminary = parser.parse_args(args)
     return preliminary
 
@@ -125,7 +139,8 @@ def main(args):
     try:
         options.validate(options)
         options.run(options)
-    except (ValidationError, AttributeError) as _ :
+    except (ValidationError, AttributeError) as e :
+        print(e)
         return
 
 if __name__ == '__main__':
