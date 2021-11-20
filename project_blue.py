@@ -1,5 +1,5 @@
-from inputKeys import KeyPress, TwoKeyCombo
-from windowManager import WindowMgr
+from infra.inputKeys import KeyPress, TwoKeyCombo
+from infra.windowManager import WindowMgr
 import time
 import datetime
 import sys
