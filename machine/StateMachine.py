@@ -12,7 +12,6 @@ class StateMachine(Machine, MachineOperations):
             'hq',
             'dorm',
             'academy',
-            'cattery',
             'battle',
             # Chapter states
             'chapter-normal-*',
@@ -89,7 +88,7 @@ class StateMachine(Machine, MachineOperations):
             'cattery-train',
         ]
 
-        # template: { 'trigger': '', 'source': '', 'dest': '' }
+        # template: { 'trigger': '', 'source': '', 'dest': '', 'before': '' },
         transitions = [
             { 'trigger': 'login', 'source': 'disconnected', 'dest': 'main-menu' },
             # Main menu
@@ -141,7 +140,7 @@ class StateMachine(Machine, MachineOperations):
             # HQ submenu
             { 'trigger': 'to_academy', 'source': 'hq', 'dest': 'academy' },
             { 'trigger': 'to_dorm', 'source': 'hq', 'dest': 'dorm' },
-            { 'trigger': 'to_cattery', 'source': 'hq', 'dest': 'cattery' },
+            { 'trigger': 'to_cattery', 'source': 'hq', 'dest': 'cattery-main', 'before': 'to_cat_lodge' },
             # Battle menu
             { 'trigger': 'to_campaign', 'source': 'battle', 'dest': 'chapter-normal-*', 'before': 'battle_to_campaign' },
             { 'trigger': 'to_event', 'source': 'battle', 'dest': 'current-event-*', 'before': 'battle_to_event' },
@@ -276,8 +275,11 @@ class StateMachine(Machine, MachineOperations):
             { 'trigger': 'to_daily_raids', 'source': 'maritime-attack-levels', 'dest': 'daily-raids-a', 'before': 'go_exit_stage' },
             { 'trigger': 'to_daily_raids', 'source': 'tactical-training-levels', 'dest': 'daily-raids-t', 'before': 'go_exit_stage' },
             { 'trigger': 'to_daily_raids', 'source': 'backline-disruption-levels', 'dest': 'daily-raids-s', 'before': 'go_exit_stage' },
-        
+            # Cattery
+            { 'trigger': 'to_forts', 'source': 'cattery-main', 'dest': 'cattery-comffort', 'before': 'go_forts' },
+            { 'trigger': 'level_forts', 'source': 'cattery-comffort', 'dest': 'cattery-main', 'before': 'tend_to_cats' },
+            { 'trigger': 'buy_cat', 'source': 'cattery-main', 'dest': None, 'before': 'go_buy_box' },
+            { 'trigger': 'to_main_menu', 'source': 'cattery-main', 'dest': 'main-menu', 'before': 'go_back' },
         ]
 
         Machine.__init__(self, states=states, transitions=transitions, initial='main-menu', auto_transitions=False, send_event=True)
-        MachineOperations.__init__(self)

@@ -5,6 +5,12 @@ import mss.tools
 
 class MachineOperations():
     # Based on the controls - see bluestacks1.md
+    def free_press(self, event):
+        KeyPress('A')
+
+    def go_back(self, event):
+        TwoKeyCombo('LCTRL', 'B')
+    
     def go_to_main_menu(self, event):
         TwoKeyCombo('LCTRL', 'H')
     
@@ -212,13 +218,15 @@ class MachineOperations():
     screenshot_directory = './screenshots/'
 
     def time_and_screenshot(self):
-        time.sleep(self.clear_time)
-        now = datetime.datetime.now()
-        date_string = now.strftime(self.date_to_file_format)
-        filename = self.screenshot_directory + date_string + '.png'
-        coordinates = self.window.get_window_coordinates()
-        image = self.sct.grab(coordinates)
-        mss.tools.to_png(image.rgb, image.size, output=filename)
+        for _ in range(0, self.clear_time, 30):
+            # Take a screenshot every 30 s
+            time.sleep(30)
+            now = datetime.datetime.now()
+            date_string = now.strftime(self.date_to_file_format)
+            filename = self.screenshot_directory + date_string + '.png'
+            coordinates = self.window.get_window_coordinates()
+            image = self.sct.grab(coordinates)
+            mss.tools.to_png(image.rgb, image.size, output=filename)
     
     def start_stage(self, event):
         KeyPress('ENTER')
@@ -237,7 +245,7 @@ class MachineOperations():
         return (not self.successful_clear()) and self.defeated() 
 
     def go_exit_stage(self, event):
-        TwoKeyCombo('LCTRL', 'B')
+        self.go_back(event)
 
     def go_continue_stage(self, event):
         TwoKeyCombo('LCTRL', 'ENTER')
@@ -295,4 +303,25 @@ class MachineOperations():
         TwoKeyCombo('LCTRL', option)
         TwoKeyCombo('LALT', 'D')
         # time.sleep(1)
-        KeyPress('A')
+        self.free_press(event)
+
+    def to_cat_lodge(self, event):
+        TwoKeyCombo('LCTRL', 'T')
+        TwoKeyCombo('LALT', 'H')
+        self.free_press(event)
+
+    def go_forts(self, event):
+        TwoKeyCombo('LALT', 'E')
+
+    def tend_to_cats(self, event):
+        for _ in range(6):
+            TwoKeyCombo('LALT', 'F')
+
+    def go_buy_box(self, event):
+        TwoKeyCombo('LALT', 'B')
+        TwoKeyCombo('LALT', 'A')
+        # TODO: Track whether this is the first box per day
+        TwoKeyCombo('LALT', 'G')
+        time.sleep(2)
+        for _ in range(2):
+            self.free_press(event)
