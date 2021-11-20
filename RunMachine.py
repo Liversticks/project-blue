@@ -10,6 +10,8 @@ def run_battle(options):
         be.cleanup()
 
 def run_cat(options):
+    ce = CatEngine(None)
+    ce.run_cat(options)
     print(options)
 
 def run_raid(options):
