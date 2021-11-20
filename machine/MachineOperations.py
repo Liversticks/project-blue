@@ -185,6 +185,19 @@ class MachineOperations():
     def enter_11_4(self, event):
         TwoKeyCombo('LSHIFT', '5')
 
+    def enter_12_1(self, event):
+        TwoKeyCombo('LSHIFT', '2')
+
+    def enter_12_2(self, event):
+        TwoKeyCombo('LSHIFT', '1')
+
+    def enter_12_3(self, event):
+        TwoKeyCombo('LSHIFT', '0')
+
+    def enter_12_4(self, event):
+        TwoKeyCombo('LSHIFT', '3')
+
+
     def go_select_fleet(self, event):
         KeyPress('G')
 

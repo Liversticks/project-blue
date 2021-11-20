@@ -217,6 +217,10 @@ class StateMachine(Machine, MachineOperations):
             { 'trigger': 'enter_2', 'source': ['chapter-normal-11', 'chapter-hard-11'], 'dest': 'enter-stage', 'before': 'enter_11_2' },
             { 'trigger': 'enter_3', 'source': ['chapter-normal-11', 'chapter-hard-11'], 'dest': 'enter-stage', 'before': 'enter_11_3' },
             { 'trigger': 'enter_4', 'source': ['chapter-normal-11', 'chapter-hard-11'], 'dest': 'enter-stage', 'before': 'enter_11_4' },
+            { 'trigger': 'enter_1', 'source': ['chapter-normal-12', 'chapter-hard-12'], 'dest': 'enter-stage', 'before': 'enter_12_1' },
+            { 'trigger': 'enter_2', 'source': ['chapter-normal-12', 'chapter-hard-12'], 'dest': 'enter-stage', 'before': 'enter_12_2' },
+            { 'trigger': 'enter_3', 'source': ['chapter-normal-12', 'chapter-hard-12'], 'dest': 'enter-stage', 'before': 'enter_12_3' },
+            { 'trigger': 'enter_4', 'source': ['chapter-normal-12', 'chapter-hard-12'], 'dest': 'enter-stage', 'before': 'enter_12_4' },
             # TODO: triggers for entering chapter 12-14 normal stages
             # Event stages
             { 'trigger': 'to_SP', 'source': 'current-event-*', 'dest': 'current-event-SP', 'before': 'event_to_SP' },
