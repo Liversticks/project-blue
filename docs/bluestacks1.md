@@ -24,16 +24,16 @@
 - LARROW: Go to previous chapter
 - RARROW: Go to next chapter
 - Toggle Normal/Hard Mode
-- Shift + 1: 1-1, 3-2, 4-2, 7-1, 9-2
+- Shift + 1: 1-1, 3-2, 4-2, 7-1, 9-2, 12-2
 - Shift + 2: 1-2, 2-3, 3-1, 6-3, 8-1, 9-1, 10-1, 11-1, 12-1
-- Shift + 3: 1-3, 4-3, 5-2, 6-1, 9-4, 10-3
+- Shift + 3: 1-3, 4-3, 5-2, 6-1, 9-4, 10-3, 12-3
 - Shift + 4: 1-4, 2-2, 3-3, 7-2, 11-3
 - Shift + 5: 2-1, 7-4, 8-4, 11-4
 - Shift + 6: 2-4, 8-3, 11-2
 - Shift + 7: 3-4, 4-4, 5-3, 6-2
 - Shift + 8: 4-1, 5-1, 8-2
 - Shift + 9: 6-4, 10-2
-- Shift + 0: 7-3, 9-3, 10-4
+- Shift + 0: 7-3, 9-3, 10-4, 12-4
 - Shift + A:
 - Shift + B:
 - Unassigned: 5-4
@@ -67,6 +67,10 @@
 - Shift + S: SP1
 - Shift + R: SP2
 - Shift + Q: SP3
+- Shift + O: T1
+- Shift + N: T2
+- Shift + M: T3
+- Shift + L: T4
 
 ## Daily Raids
 - D: select Daily Raids submenu
@@ -74,3 +78,12 @@
 - CTRL + 2: Middle option
 - CTRL + 3: Bottom option
 - Alt + D: Quick Attack
+
+## Cattery
+- CTRL + T: HQ --> Cat Lodge
+- ALT + H: Confirm Meowfficer XP levelling, Cat Main --> Queue
+- ALT + E: Cat Main --> Comfforts
+- ALT + B: Cat Main --> Buy Box
+- ALT + A: Actually buy the box
+- ALT + G: Confirm that the first box is free
+- ALT + F: Tend to Comfforts
