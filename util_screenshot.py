@@ -1,6 +1,6 @@
 import mss
 import mss.tools
-from windowManager import WindowMgr
+from infra.windowManager import WindowMgr
 import datetime
 
 def main():
