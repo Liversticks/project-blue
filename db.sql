@@ -70,4 +70,8 @@ INSERT INTO stage (is_hard, stage, clear_time) VALUES
     (true, 'C-3', 720),
     (true, 'D-1', 720),
     (true, 'D-2', 840),
-    (true, 'D-3', 840);
+    (true, 'D-3', 840),
+    (false, 'T-1', 600),
+    (false, 'T-2', 600),
+    (false, 'T-3', 720),
+    (false, 'T-4', 720);

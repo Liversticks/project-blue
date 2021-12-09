@@ -3,7 +3,7 @@ import sys
 import re
 import RunMachine as rm
 
-stage_re = re.compile('event(-hard)?|1[0-4]-[1-4]|[1-9]-[1-4]|([A-D]|SP)-[1-3]')
+stage_re = re.compile('event(-hard)?|1[0-4]-[1-4]|[1-9]-[1-4]|([A-D]|SP)-[1-3]|T-[1-4]')
 
 class InvalidStageError(Exception): pass
 

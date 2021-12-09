@@ -4,7 +4,7 @@ import sqlite3 as sql
 class BattleEngine(BaseEngine):
 
     filename = 'test.db'
-    eventPrefixes = ['A', 'B', 'C', 'D', 'SP']
+    eventPrefixes = ['A', 'B', 'C', 'D', 'SP', 'T']
     selectStage = 'SELECT is_hard, clear_time FROM stage WHERE stage = ?'
 
     def enter_normal_stage(self, fleet1, fleet2=None):
@@ -35,7 +35,9 @@ class BattleEngine(BaseEngine):
             stage_number = components[1]
             if prefix in self.eventPrefixes:
                 self.machine.to_event()
-                if prefix != 'SP':
+                if prefix == 'T':
+                    self.machine.to_T()
+                elif prefix != 'SP':
                     # WARNING: not yet implemented
                     self.machine.to_SP()
                     if prefix == 'D':

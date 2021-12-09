@@ -308,6 +308,26 @@ class MachineOperations():
     def enter_SP_3(self, event):
         TwoKeyCombo('LSHIFT', 'Q')
 
+    def is_event_T(self, event):
+        # figure out later
+        return True
+
+    def event_to_T(self, event):
+        for _ in range(2):
+            self.to_previous_chapter(event)
+    
+    def enter_T_1(self, event):
+        TwoKeyCombo('LSHIFT', 'Q')
+
+    def enter_T_2(self, event):
+        TwoKeyCombo('LSHIFT', 'O')
+
+    def enter_T_3(self, event):
+        TwoKeyCombo('LSHIFT', 'N')
+
+    def enter_T_4(self, event):
+        TwoKeyCombo('LSHIFT', 'M')
+
     def to_daily_raids_list(self, event):
         KeyPress('D')
 

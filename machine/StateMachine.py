@@ -48,6 +48,7 @@ class StateMachine(Machine, MachineOperations):
             'current-event-D',
             'current-event-SP',
             'current-event-EX',
+            'current-event-T',
             # All stages (Clearing mode must be on and Auto-Search must be enabled!)
             'enter-stage',
             'enter-stage-hard',
@@ -228,6 +229,7 @@ class StateMachine(Machine, MachineOperations):
             { 'trigger': 'to_B', 'source': 'current-event-SP', 'dest': 'current-event-B', 'before': 'hard_mode_toggle' },
             { 'trigger': 'to_C', 'source': 'current-event-D', 'dest': 'current-event-C', 'before': 'to_previous_chapter' },
             { 'trigger': 'to_A', 'source': 'current-event-B', 'dest': 'current-event-A', 'before': 'to_previous_chapter' },
+            { 'trigger': 'to_T', 'source': 'current-event-*', 'dest': 'current-event-T', 'before': 'event_to_T' },
             { 'trigger': 'enter_1', 'source': ['current-event-A', 'current-event-C'], 'dest': 'enter-stage', 'before': 'enter_AC_1' },
             { 'trigger': 'enter_2', 'source': ['current-event-A', 'current-event-C'], 'dest': 'enter-stage', 'before': 'enter_AC_2' },
             { 'trigger': 'enter_3', 'source': ['current-event-A', 'current-event-C'], 'dest': 'enter-stage', 'before': 'enter_AC_3' },
@@ -238,6 +240,10 @@ class StateMachine(Machine, MachineOperations):
             { 'trigger': 'enter_1', 'source': 'current-event-*', 'dest': 'enter-stage', 'before': 'enter_SP_1', 'conditions': 'is_event_SP' },
             { 'trigger': 'enter_2', 'source': 'current-event-*', 'dest': 'enter-stage', 'before': 'enter_SP_2', 'conditions': 'is_event_SP' },
             { 'trigger': 'enter_3', 'source': 'current-event-*', 'dest': 'enter-stage', 'before': 'enter_SP_3', 'conditions': 'is_event_SP' },
+            { 'trigger': 'enter_1', 'source': 'current-event-T', 'dest': 'enter-stage', 'before': 'enter_T_1', 'conditions': 'is_event_T' },
+            { 'trigger': 'enter_2', 'source': 'current-event-T', 'dest': 'enter-stage', 'before': 'enter_T_2', 'conditions': 'is_event_T' },
+            { 'trigger': 'enter_3', 'source': 'current-event-T', 'dest': 'enter-stage', 'before': 'enter_T_3', 'conditions': 'is_event_T' },
+            { 'trigger': 'enter_4', 'source': 'current-event-T', 'dest': 'enter-stage', 'before': 'enter_T_4', 'conditions': 'is_event_T' },
             # TODO: War Archive stages
             
             # Normal mode fleet selection
