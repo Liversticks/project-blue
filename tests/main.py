@@ -33,5 +33,13 @@ class TestStateMachine(unittest.TestCase):
         self.machine.to_battle()
         self.assertEqual(self.machine.state, 'battle')
 
+    def test_main_menu_quick_access(self):
+        self.machine.to_quick_access()
+        self.assertEqual(self.machine.state, 'quick-access')
+
+    def test_main_menu_quick_access(self):
+        self.machine.to_event()
+        self.assertEqual(self.machine.state, 'current-event-*')
+
 if __name__ == '__main__':
     unittest.main()
