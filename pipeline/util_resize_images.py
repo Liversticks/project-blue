@@ -1,7 +1,6 @@
 import sys
 from preprocessing import resize_images
 
-
 def main(in_directory, out_directory):
     resize_images(in_directory, out_directory)
 
