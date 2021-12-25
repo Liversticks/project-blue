@@ -7,7 +7,7 @@ import numpy as np
 from sklearn.pipeline import make_pipeline
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report, confusion_matrix
 from joblib import dump
 import time
 
@@ -97,6 +97,7 @@ def main(input_file_directory):
     predicted = model.predict(X_valid)
 
     print(f"{classification_report(y_valid, predicted)}")
+    print(confusion_matrix(y_valid, predicted))
 
     dump(model, 'sklearn-intermediate-1.joblib')
     #plt.imshow(defeat_resized[0])
