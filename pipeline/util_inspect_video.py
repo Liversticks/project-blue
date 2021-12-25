@@ -78,4 +78,7 @@ def main(video_file_path):
         time.sleep(group[1] - group[0] + 5)
 
 if __name__ == '__main__':
-    main(sys.argv[1])
+    try:
+        main(sys.argv[1])
+    except IndexError:
+        print(f"Usage: {sys.argv[0]} <video file with segments.txt in same directory>")
