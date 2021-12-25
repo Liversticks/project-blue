@@ -26,7 +26,8 @@ def remove_files(keep_directory, remove_directory):
         except FileNotFoundError:
             pass
 
-image_size = (9 * 25, 16 * 25)
+# Widescreen is normally 16:9. Using 2:1 makes it easier to split for a CNN
+image_size = (128, 256)
 def resize_images(from_directory, to_directory):
     folders = os.listdir(from_directory)
     for folder in folders:
