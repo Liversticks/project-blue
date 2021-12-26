@@ -2,7 +2,9 @@ __pycache__/*
 __pycache__
 
 pblue/
+
 tf/
+save_at*.h5
 
 merge-images/
 *.png
