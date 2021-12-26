@@ -116,7 +116,7 @@ def main(train_path, unseen_path):
         predictions = model.predict(img_arr)
         print(f"Score for {filename}: {predictions}")
 
-    model.save('al_classifier_keras_v1.h5')
+    model.save_weights('al_classifier_keras_v2.h5')
 
 if __name__ == '__main__':
     main(sys.argv[1], sys.argv[2])
