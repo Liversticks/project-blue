@@ -2,8 +2,12 @@ from infra.inputKeys import KeyPress, TwoKeyCombo
 import time
 import datetime
 import mss.tools
+from pipeline import keras_predict, categories
 
 class MachineOperations():
+    def __init__(self):
+        self.classifier = keras_predict.Classifier()
+    
     # Based on the controls - see bluestacks1.md
     def free_press(self, event):
         KeyPress('A')
@@ -229,33 +233,52 @@ class MachineOperations():
 
     date_to_file_format = '%d-%m-%Y %H_%M_%S'
     screenshot_directory = './screenshots/'
+    screenshot_threshold = 30
 
-    def time_and_screenshot(self):
-        for _ in range(0, self.clear_time, 30):
-            # Take a screenshot every 30 s
-            time.sleep(30)
+    def wait_interval(self):
+        time.sleep(self.screenshot_threshold)
+        current = time.time()
+        if current - self.start_time < self.min_clear_time:
+            time.sleep(self.min_clear_time - (current - self.timestamp))
+
+    def predict_and_screenshot(self):
+        current = time.time()
+        if current - self.timestamp > self.screenshot_threshold:
             now = datetime.datetime.now()
             date_string = now.strftime(self.date_to_file_format)
             filename = self.screenshot_directory + date_string + '.png'
             coordinates = self.window.get_window_coordinates()
             image = self.sct.grab(coordinates)
             mss.tools.to_png(image.rgb, image.size, output=filename)
+            
+            can_predict = self.classifier.to_numpy(image)
+            self.status = self.classifier.predict(can_predict)
+            self.timestamp = time.time()
+        return self.status
     
     def start_stage(self, event):
         KeyPress('ENTER')
-        self.clear_time = event.kwargs.get('clear_time', 600)
-        self.time_and_screenshot()
+        self.min_clear_time = event.kwargs.get('min_clear_time', 60)
+        self.status = 6
+        self.timestamp = time.time()
+        self.start_time = self.timestamp
 
     def successful_clear(self, event):
-        # TODO: check if the clearing rewards are displayed
-        return True
+        status = self.predict_and_screenshot()
+        if categories.categories[status] == 'clear_chapter':
+            return True
+        else:
+            return False
     
     def defeated(self, event):
-        # TODO: check if the defeated screen is displayed
-        return False
+        status = self.predict_and_screenshot()
+        if categories.categories[status] == 'defeat':
+            return True
+        else:
+            return False
 
     def not_clear_yet(self, event):
-        return (not self.successful_clear()) and self.defeated() 
+        return (not self.successful_clear(event)) and self.defeated(event) 
 
     def go_exit_stage(self, event):
         self.go_back(event)
@@ -266,6 +289,12 @@ class MachineOperations():
 
     def set_another_heclp(self, event):
         TwoKeyCombo('LSHIFT', 'P')
+
+    def cleanup_def(self, event):
+        KeyPress('F')
+        KeyPress('I')
+        KeyPress('J')
+        KeyPress('K')
 
     # TODO: unimplemented in BlueStacks for now (11/11/21)
     def event_to_SP(self, event):

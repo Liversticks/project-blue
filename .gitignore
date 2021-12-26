@@ -3,6 +3,7 @@ __pycache__
 
 pblue/
 
+all/
 tf/
 *.h5
 

@@ -5,6 +5,9 @@
 
 ## Main menu
 - A: Free click
+- I: 1-part alert Confirm
+- K: 2-part alert Confirm 
+- L: 2-part alert Cancel
 - CTRL + B: Back
 - CTRL + Q: Quick access submenu
 - CTRL + H: Home
@@ -24,8 +27,8 @@
 - LARROW: Go to previous chapter
 - RARROW: Go to next chapter
 - Toggle Normal/Hard Mode
-- Shift + 1: 1-1, 3-2, 4-2, 7-1, 9-2, 12-2
-- Shift + 2: 1-2, 2-3, 3-1, 6-3, 8-1, 9-1, 10-1, 11-1, 12-1
+- Shift + 1: 1-1, 3-2, 4-2, 7-1, 9-2, 12-2, 13-2
+- Shift + 2: 1-2, 2-3, 3-1, 6-3, 8-1, 9-1, 10-1, 11-1, 12-1, 13-1
 - Shift + 3: 1-3, 4-3, 5-2, 6-1, 9-4, 10-3, 12-3
 - Shift + 4: 1-4, 2-2, 3-3, 7-2, 11-3
 - Shift + 5: 2-1, 7-4, 8-4, 11-4
@@ -33,7 +36,7 @@
 - Shift + 7: 3-4, 4-4, 5-3, 6-2
 - Shift + 8: 4-1, 5-1, 8-2
 - Shift + 9: 6-4, 10-2
-- Shift + 0: 7-3, 9-3, 10-4, 12-4
+- Shift + 0: 7-3, 9-3, 10-4, 12-4, 13-3
 - Shift + A:
 - Shift + B:
 - Unassigned: 5-4
@@ -55,6 +58,9 @@
 - P: Toggle High Efficiency Combat Logistics Plan in fleet selection
 - SHIFT + P: Use a HECLP for further clears
 - CTRL + ENTER: Continue same stage
+- E: Confirm
+- F: Close Defeat
+- J: Retreat
 
 ## Event
 - Shift + Z: A1/C1

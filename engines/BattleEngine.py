@@ -1,6 +1,9 @@
 from engines.BaseEngine import BaseEngine
 import sqlite3 as sql
 
+class UnexpectedStateError(Exception):
+    pass
+
 class BattleEngine(BaseEngine):
 
     filename = 'test.db'
@@ -15,14 +18,32 @@ class BattleEngine(BaseEngine):
             self.machine.set_surface_2(fleet=str(fleet2[0]))
         self.machine.set_roles()
     
-    def clear_normal_stage(self, clear_time, iterations, heclp=False):
-        self.machine.enter_combat(clear_time=clear_time)
-        self.machine.finish_combat()
-        for _ in range(iterations - 1):
-            if heclp:
-                self.machine.set_heclp()
-            self.machine.continue_stage()
+    def enter_first_stage(self, min_clear_time):
+        self.machine.enter_combat(min_clear_time=min_clear_time)
+    
+    def finish_stage(self):
+        while self.machine.state == 'combat':
             self.machine.finish_combat()
+        
+        if self.machine.state == 'stage-defeat':
+            self.machine.cleanup_defeat()
+        elif self.machine.state == 'stage-clear':
+            print("Stage cleared.")
+        else:
+            raise UnexpectedStateError
+
+    def clear_subsequent_stage(self, heclp=False):
+        if heclp:
+            self.machine.set_heclp()
+        self.machine.continue_stage()
+        self.finish_stage()
+
+    def clear_normal_stage(self, min_clear_time, iterations, heclp=False):
+        self.enter_first_stage(min_clear_time)
+        self.finish_stage()
+
+        for _ in range(iterations - 1):
+            self.clear_subsequent_stage(heclp=heclp)
 
     def clear_stage(self, options):
         for stage in options.split:
