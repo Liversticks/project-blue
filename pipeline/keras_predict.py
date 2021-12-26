@@ -1,15 +1,14 @@
 from tensorflow import keras
 from PIL import Image
 from pipeline.preprocessing import image_size
-from pipeline.keras_classifiers import make_model, categories
+from pipeline.keras_classifiers import make_model, categories, filename
 import tensorflow as tf
 
 class Classifier():
 
     def __init__(self):
-        model_file_name = 'al_classifier_keras_v2.h5'
         self.model = make_model(input_shape=image_size + (3,), num_classes=categories)
-        self.model.load_weights(model_file_name)
+        self.model.load_weights(filename)
 
     def to_numpy(self, image):
         # PIL example: https://python-mss.readthedocs.io/examples.html

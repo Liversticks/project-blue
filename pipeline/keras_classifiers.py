@@ -3,11 +3,12 @@ import os
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
-from pipeline.preprocessing import image_size
+from preprocessing import image_size
 
 batch_size = 32
 epochs = 15
 categories = 7
+filename = 'al_classifier_keras_v3.h5'
 
 callbacks = [
     keras.callbacks.ModelCheckpoint(filepath="save_at_{epoch}.h5"),
@@ -45,7 +46,7 @@ def make_model(input_shape, num_classes):
 
     previous_block_activation = x
 
-    for size in [128, 256, 512, 720]:
+    for size in [128, 256, 512, 720, 1024]:
         x = layers.Activation("relu")(x)
         x = layers.SeparableConv2D(size, 3, padding="same")(x)
         x = layers.BatchNormalization()(x)
@@ -60,7 +61,7 @@ def make_model(input_shape, num_classes):
         x = layers.add([x, residual])
         previous_block_activation = x
 
-    x = layers.SeparableConv2D(1024, 3, padding="same")(x)
+    x = layers.SeparableConv2D(2048, 3, padding="same")(x)
     x = layers.BatchNormalization()(x)
     x = layers.Activation("relu")(x)
 
@@ -77,8 +78,8 @@ def make_model(input_shape, num_classes):
 
     return keras.Model(inputs, outputs)
 
-def main(train_path, unseen_path):
-    train_dataset = tf.keras.preprocessing.image_dataset_from_directory(
+def get_train_dataset(train_path):
+    return tf.keras.preprocessing.image_dataset_from_directory(
         train_path,
         validation_split=0.2,
         subset='training',
@@ -87,7 +88,8 @@ def main(train_path, unseen_path):
         batch_size=batch_size
     )
 
-    vaiidation_dataset = tf.keras.preprocessing.image_dataset_from_directory(
+def get_validation_dataset(train_path):
+    return tf.keras.preprocessing.image_dataset_from_directory(
         train_path,
         validation_split=0.2,
         subset='validation',
@@ -95,6 +97,10 @@ def main(train_path, unseen_path):
         image_size=image_size,
         batch_size=batch_size
     )
+
+def main(train_path):
+    train_dataset = get_train_dataset(train_path)
+    vaiidation_dataset = get_validation_dataset(train_path)
 
     model = make_model(input_shape=image_size + (3,), num_classes=categories)
     model.summary()
@@ -107,16 +113,7 @@ def main(train_path, unseen_path):
 
     model.fit(train_dataset, epochs=epochs, callbacks=callbacks, validation_data=vaiidation_dataset)
 
-    for filename in os.listdir(unseen_path):
-        path = os.path.join(unseen_path, filename)
-        img = keras.preprocessing.image.load_img(path, target_size=image_size)
-        img_arr = keras.preprocessing.image.img_to_array(img)
-        img_arr = tf.expand_dims(img_arr, 0)
-
-        predictions = model.predict(img_arr)
-        print(f"Score for {filename}: {predictions}")
-
-    model.save_weights('al_classifier_keras_v2.h5')
+    model.save_weights(filename)
 
 if __name__ == '__main__':
-    main(sys.argv[1], sys.argv[2])
+    main(sys.argv[1])
