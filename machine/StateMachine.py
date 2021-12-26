@@ -259,10 +259,11 @@ class StateMachine(Machine, MachineOperations):
             # TODO: some way to detect whether we finish in Normal or Hard Mode
             { 'trigger': 'finish_combat', 'source': 'combat', 'dest': 'stage-clear', 'conditions': 'successful_clear' },
             { 'trigger': 'finish_combat', 'source': 'combat', 'dest': 'stage-defeat', 'conditions': 'defeated' },
-            { 'trigger': 'finish_combat', 'source': 'combat', 'dest': None, 'conditions': 'not_clear_yet' },
+            { 'trigger': 'finish_combat', 'source': 'combat', 'dest': None, 'conditions': 'not_clear_yet', 'before': 'wait_interval' },
             { 'trigger': 'set_heclp', 'source': 'stage-clear', 'dest': None, 'before': 'set_another_heclp' },
             { 'trigger': 'continue_stage', 'source': 'stage-clear', 'dest': 'combat', 'before': 'go_continue_stage' },
             { 'trigger': 'exit_stage', 'source': 'stage-clear', 'dest': 'chapter-normal-*', 'before': 'go_exit_stage' },
+            { 'trigger': 'cleanup_defeat', 'source': 'stage-defeat', 'dest': 'stage-clear', 'before': 'cleanup_def' },
             # Daily Raids
             { 'trigger': 'raids_left', 'source': 'daily-raids-t', 'dest': 'daily-raids-f', 'before': 'to_previous_chapter' },
             { 'trigger': 'raids_right', 'source': 'daily-raids-t', 'dest': 'daily-raids-a', 'before': 'to_next_chapter' },
