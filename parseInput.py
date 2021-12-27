@@ -1,6 +1,8 @@
 import argparse
 import sys
 import re
+import logging
+from logging import handlers
 import RunMachine as rm
 
 stage_re = re.compile('event(-hard)?|1[0-4]-[1-4]|[1-9]-[1-4]|([A-D]|SP)-[1-3]|T-[1-4]')
@@ -135,7 +137,15 @@ def parse_arguments(args):
     return preliminary
 
 def main(args):    
+    logger = logging.getLogger('al_state_machine')
+    rfh_handler = handlers.RotatingFileHandler('al_state_machine.log', encoding='utf-8')
+    rfh_handler.setLevel(logging.INFO)
+    log_format = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s', datefmt='%d/%m/%Y %H:%M:%S')
+    rfh_handler.setFormatter(log_format)
+    logger.addHandler(rfh_handler)
+
     options = parse_arguments(args)
+    logger.debug(options)
     try:
         options.validate(options)
         options.run(options)

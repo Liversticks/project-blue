@@ -28,7 +28,7 @@ class BattleEngine(BaseEngine):
         if self.machine.state == 'stage-defeat':
             self.machine.cleanup_defeat()
         elif self.machine.state == 'stage-clear':
-            print("Stage cleared.")
+            self.logger.info("Stage cleared.")
         else:
             raise UnexpectedStateError
 
@@ -47,13 +47,15 @@ class BattleEngine(BaseEngine):
 
     def clear_stage(self, options):
         for stage in options.split:
-            print(stage)
+            self.logger.debug(f'Attempting to clear stage {stage}')
+            
             self.cursor.execute(self.selectStage, (stage,))
             row = self.cursor.fetchone()
-            print(row.keys())
+            self.logger.debug(f'Column names returned: {row.keys()}')
             components = stage.split('-')
             prefix = components[0]
             stage_number = components[1]
+            
             if prefix in self.eventPrefixes:
                 self.machine.to_event()
                 if prefix == 'T':

@@ -1,14 +1,17 @@
 from tensorflow import keras
 from PIL import Image
 from pipeline.preprocessing import image_size
-from pipeline.keras_classifiers import make_model, categories, filename
+from pipeline.keras_classifiers import make_model, filename, categories
+import pipeline.categories as cd
 import tensorflow as tf
+import logging
 
 class Classifier():
 
     def __init__(self):
         self.model = make_model(input_shape=image_size + (3,), num_classes=categories)
         self.model.load_weights(filename)
+        self.logger = logging.getLogger('al_state_machine.predict')
 
     def to_numpy(self, image):
         # PIL example: https://python-mss.readthedocs.io/examples.html
@@ -19,5 +22,5 @@ class Classifier():
     def predict(self, image):
         category_predictions = self.model.predict(image)
         result = category_predictions.argmax()
-        print(f"Prediction: {result}")
+        self.logger.info(f"Prediction: {result} ({cd.categories[result]})")
         return result
