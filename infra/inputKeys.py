@@ -102,17 +102,25 @@ keyMap = {
 
 delay = 1.5
 
+class KeyNotSupportedError(Exception):
+    pass
+
+def CheckAndReturnKeyInput(key):
+    if key not in keyMap:
+        raise KeyNotSupportedError
+    return keyMap[key]
+
 def KeyPress(key):
     time.sleep(delay)
-    keyCode = keyMap[key]
+    keyCode = CheckAndReturnKeyInput(key)
     PressKey(keyCode) # press M
     time.sleep(.05)
     ReleaseKey(keyCode) #release M
 
 def TwoKeyCombo(key1, key2):
     time.sleep(delay)
-    keyCode1 = keyMap[key1]
-    keyCode2 = keyMap[key2]
+    keyCode1 = CheckAndReturnKeyInput(key1)
+    keyCode2 = CheckAndReturnKeyInput(key2)
     PressKey(keyCode1)
     time.sleep(0.05)
     PressKey(keyCode2)
