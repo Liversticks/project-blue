@@ -281,11 +281,14 @@ class MachineOperations():
         return (not self.successful_clear(event)) and self.defeated(event) 
 
     def go_exit_stage(self, event):
+        time.sleep(2)
         self.go_back(event)
 
     def go_continue_stage(self, event):
         TwoKeyCombo('LCTRL', 'ENTER')
-        self.time_and_screenshot()
+        self.timestamp = time.time()
+        self.start_time = self.timestamp
+        self.status = 6
 
     def set_another_heclp(self, event):
         TwoKeyCombo('LSHIFT', 'P')

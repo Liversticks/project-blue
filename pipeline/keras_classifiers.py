@@ -3,7 +3,7 @@ import os
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
-from preprocessing import image_size
+from pipeline.preprocessing import image_size
 
 batch_size = 32
 epochs = 15
