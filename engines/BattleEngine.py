@@ -6,7 +6,8 @@ class UnexpectedStateError(Exception):
 
 class BattleEngine(BaseEngine):
 
-    filename = 'test.db'
+    db_filename = 'test.db'
+    seed_script_filename = 'db.sql'
     eventPrefixes = ['A', 'B', 'C', 'D', 'SP', 'T']
     selectStage = 'SELECT is_hard, clear_time FROM stage WHERE stage = ?'
 
@@ -99,7 +100,9 @@ class BattleEngine(BaseEngine):
 
     def __init__(self, sct):
         super().__init__(sct)
-        self.connection = sql.connect(self.filename)
+        self.connection = sql.connect(self.db_filename)
         self.connection.isolation_level = None
         self.connection.row_factory = sql.Row
         self.cursor = self.connection.cursor()
+        with open(self.seed_script_filename) as seed:
+            self.cursor.executescript(seed.read())

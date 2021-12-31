@@ -1,12 +1,11 @@
-CREATE TABLE stage (
+CREATE TABLE IF NOT EXISTS stage (
     id INTEGER PRIMARY KEY,
     is_hard BOOLEAN NOT NULL,
     stage VARCHAR(50) NOT NULL,
     clear_time INTEGER NOT NULL
 );
 
--- Clear times skew slightly conservative
--- 120 sec per battle (S-rank)
+-- clear_time = minimum clear time
 INSERT INTO stage (is_hard, stage, clear_time) VALUES
     (false, '1-1', 60),
     (false, '1-2', 60),
