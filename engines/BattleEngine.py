@@ -46,6 +46,19 @@ class BattleEngine(BaseEngine):
         for _ in range(iterations - 1):
             self.clear_subsequent_stage(heclp=heclp)
 
+    def handle_EX_event(self, prefix):
+        self.machine.to_SP()
+        if prefix == 'D':
+            self.machine.to_D()
+        elif prefix == 'C':
+            self.machine.to_D()
+            self.machine.to_C()
+        elif prefix == 'B':
+            self.machine.to_B()
+        elif prefix == 'A':
+            self.machine.to_B()
+            self.machine.to_A()
+
     def clear_stage(self, options):
         for stage in options.split:
             self.logger.debug(f'Attempting to clear stage {stage}')
@@ -62,18 +75,7 @@ class BattleEngine(BaseEngine):
                 if prefix == 'T':
                     self.machine.to_T()
                 elif prefix != 'SP':
-                    # WARNING: not yet implemented
-                    self.machine.to_SP()
-                    if prefix == 'D':
-                        self.machine.to_D()
-                    elif prefix == 'C':
-                        self.machine.to_D()
-                        self.machine.to_C()
-                    elif prefix == 'B':
-                        self.machine.to_B()
-                    elif prefix == 'A':
-                        self.machine.to_B()
-                        self.machine.to_A()
+                    self.handle_EX_event(prefix)    
                 getattr(self.machine, f'enter_{stage_number}')()
                 if row['is_hard']:
                     self.machine.to_select_fleet()
