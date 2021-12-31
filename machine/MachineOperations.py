@@ -387,37 +387,40 @@ class MachineOperations():
         KeyPress('K')
         self.logger.debug('Returned to the stage clear dialog after a defeat')
 
-    # TODO: unimplemented in BlueStacks for now (11/11/21)
     def event_to_SP(self, event):
-        TwoKeyCombo()
-    
-    def hard_mode_toggle(self, event):
-        KeyPress()
-
-    def enter_AC_1(self, event):
-        TwoKeyCombo('LSHIFT', 'Z')
-
-    def enter_AC_2(self, event):
         TwoKeyCombo('LSHIFT', 'Y')
     
+    def hard_mode_toggle(self, event):
+        TwoKeyCombo('LSHIFT', 'Z')
+
+    def enter_AC_1(self, event):
+        TwoKeyCombo('LSHIFT', '2')
+
+    def enter_AC_2(self, event):
+        TwoKeyCombo('LSHIFT', 'O')
+    
     def enter_AC_3(self, event):
-        TwoKeyCombo('LSHIFT', 'X')
+        TwoKeyCombo('LSHIFT', '0')
     
-    def enter_BD_1(self, event):
-        TwoKeyCombo('LSHIFT', 'W')
+    def enter_B_1(self, event):
+        TwoKeyCombo('LSHIFT', '9')
     
+    def enter_D_1(self, event):
+        TwoKeyCombo('LSHIFT', '2')
+    
+    # TODO: find a more permanent mapping
     def enter_B_2(self, event):
-        TwoKeyCombo('LSHIFT', 'V')
+        TwoKeyCombo('LALT', 'E')
     
     def enter_D_2(self, event):
-        TwoKeyCombo('LSHIFT', 'U')
+        TwoKeyCombo('LSHIFT', '1')
 
     def is_event_SP(self, event):
         # TODO: DB flags based on event timing
-        return True
+        return False
 
     def enter_BD_3(self, event):
-        TwoKeyCombo('LSHIFT', 'T')
+        TwoKeyCombo('LSHIFT', '0')
     
     def enter_SP_1(self, event):
         TwoKeyCombo('LSHIFT', 'S')
@@ -430,7 +433,7 @@ class MachineOperations():
 
     def is_event_T(self, event):
         # figure out later
-        return True
+        return False
 
     def event_to_T(self, event):
         for _ in range(2):
