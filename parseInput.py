@@ -73,6 +73,11 @@ def parse_arguments(args):
     parser = argparse.ArgumentParser(
         description='Automatic AL grinding using a state machine.'
     )
+
+    parser.add_argument('-d', '--debug', action='store_true',
+        help='Enable debug logging and screenshots.'
+    )
+
     subparsers = parser.add_subparsers(dest='subparser')
 
     ## BATTLE OPTIONS
@@ -133,18 +138,25 @@ def parse_arguments(args):
     )
     parser_d.set_defaults(validate=validate_raid, run=rm.run_raid)
 
-    preliminary = parser.parse_args(args)
-    return preliminary
+    return parser.parse_args(args)
 
 def main(args):    
+    options = parse_arguments(args)
+    
     logger = logging.getLogger('al_state_machine')
     rfh_handler = handlers.RotatingFileHandler('al_state_machine.log', encoding='utf-8')
-    rfh_handler.setLevel(logging.INFO)
+    
+    if options.debug:
+        logger.setLevel(logging.DEBUG)
+        rfh_handler.setLevel(logging.DEBUG)
+    else:
+        logger.setLevel(logging.INFO)
+        rfh_handler.setLevel(logging.INFO)
+    
     log_format = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s', datefmt='%d/%m/%Y %H:%M:%S')
     rfh_handler.setFormatter(log_format)
     logger.addHandler(rfh_handler)
 
-    options = parse_arguments(args)
     logger.debug(options)
     try:
         options.validate(options)
