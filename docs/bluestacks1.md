@@ -26,9 +26,9 @@
 ## Campaign
 - LARROW: Go to previous chapter
 - RARROW: Go to next chapter
-- Toggle Normal/Hard Mode
+- Shift + Z: Toggle Normal/Hard Mode
 - Shift + 1: 1-1, 3-2, 4-2, 7-1, 9-2, 12-2, 13-2
-- Shift + 2: 1-2, 2-3, 3-1, 6-3, 8-1, 9-1, 10-1, 11-1, 12-1, 13-1
+- Shift + 2: 1-2, 2-3, 3-1, 6-3, 8-1, 9-1, 10-1, 11-1, 12-1, 13-1, current A1/C1
 - Shift + 3: 1-3, 4-3, 5-2, 6-1, 9-4, 10-3, 12-3
 - Shift + 4: 1-4, 2-2, 3-3, 7-2, 11-3
 - Shift + 5: 2-1, 7-4, 8-4, 11-4
@@ -36,7 +36,7 @@
 - Shift + 7: 3-4, 4-4, 5-3, 6-2
 - Shift + 8: 4-1, 5-1, 8-2
 - Shift + 9: 6-4, 10-2
-- Shift + 0: 7-3, 9-3, 10-4, 12-4, 13-3
+- Shift + 0: 7-3, 9-3, 10-4, 12-4, 13-3, current A3/C3
 - Shift + A:
 - Shift + B:
 - Unassigned: 5-4
@@ -62,18 +62,28 @@
 - F: Close Defeat
 - J: Retreat
 
+## War Archives
+- Visitors Dyed in Red
+- Fallen Wings
+- Winter's Crown
+- Divergent Chessboard
+- Iris of Light and Dark
+- Ink-Stained Steel Sakura
+- Crimson Echoes
+- Scherzo of Iron and Blood
+
+- Strive, Wish, and Strategize
+- Encircling Graf Spee
+- Glorious Battle
+
+- : Claim Data Keys
+
 ## Event
-- Shift + Z: A1/C1
-- Shift + Y: A2/C2
-- Shift + X: A3/C3
-- Shift + W: B1/D1
-- Shift + V: B2
-- Shift + U: D2
-- Shift + T: B3/D3
+- Shift + Y: SP/EX toggle
 - Shift + S: SP1
 - Shift + R: SP2
 - Shift + Q: SP3
-- Shift + O: T1
+- Shift + O: T1, current A2/C2
 - Shift + N: T2
 - Shift + M: T3
 - Shift + L: T4
