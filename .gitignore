@@ -12,3 +12,4 @@ merge-images/
 *.joblib
 
 secrets.txt
+*.log
