@@ -61,6 +61,7 @@ INSERT INTO stage (is_hard, stage, clear_time) VALUES
     (false, 'SP-1', 60),
     (false, 'SP-2', 90),
     (false, 'SP-3', 120),
+    (false, 'SP-4', 150),
     (false, 'A-1', 120),
     (false, 'A-2', 120),
     (false, 'A-3', 120),
