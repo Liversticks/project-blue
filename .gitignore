@@ -1,8 +1,6 @@
 __pycache__/*
 __pycache__
 
-pblue/
-
 all/
 tf/
 *.h5
@@ -13,3 +11,5 @@ merge-images/
 
 secrets.txt
 *.log
+
+*.db
