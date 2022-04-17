@@ -252,6 +252,7 @@ class StateMachine(Machine):
             { 'trigger': 'enter_1', 'source': 'current-event-*', 'dest': 'enter-stage', 'before': 'enter_SP_1', 'conditions': 'is_event_SP' },
             { 'trigger': 'enter_2', 'source': 'current-event-*', 'dest': 'enter-stage', 'before': 'enter_SP_2', 'conditions': 'is_event_SP' },
             { 'trigger': 'enter_3', 'source': 'current-event-*', 'dest': 'enter-stage', 'before': 'enter_SP_3', 'conditions': 'is_event_SP' },
+            { 'trigger': 'enter_4', 'source': 'current-event-*', 'dest': 'enter-stage', 'before': 'enter_SP_4', 'conditions': 'is_event_SP' },
             { 'trigger': 'enter_1', 'source': 'current-event-T', 'dest': 'enter-stage', 'before': 'enter_T_1', 'conditions': 'is_event_T' },
             { 'trigger': 'enter_2', 'source': 'current-event-T', 'dest': 'enter-stage', 'before': 'enter_T_2', 'conditions': 'is_event_T' },
             { 'trigger': 'enter_3', 'source': 'current-event-T', 'dest': 'enter-stage', 'before': 'enter_T_3', 'conditions': 'is_event_T' },
@@ -611,7 +612,7 @@ class StateMachine(Machine):
         KeyPress('P')
         self.logger.debug('Toggled high-efficiency combat logistics plan')
 
-    date_to_file_format = '%d-%m-%Y %H_%M_%S'
+    date_to_file_format = '%Y-%m-%d %H_%M_%S'
     screenshot_directory = './screenshots/'
     screenshot_threshold = 30
 
@@ -732,6 +733,9 @@ class StateMachine(Machine):
 
     def enter_SP_3(self, event):
         TwoKeyCombo('LSHIFT', 'Q')
+
+    def enter_SP_4(self, event):
+        TwoKeyCombo('LSHIFT', '0')
 
     def is_event_T(self, event):
         # figure out later
