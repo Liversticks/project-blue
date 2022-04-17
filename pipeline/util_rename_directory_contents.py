@@ -24,4 +24,4 @@ if __name__ == '__main__':
         else:
             raise IndexError
     except IndexError:
-        print(f"Usage: {sys.argv[0]} <append/trim> <path_to_directory> <text_to_append>")
+        print(f"Usage: {sys.argv[0]} <append/trim> <path_to_directory> <text_to_append_or_trim>")
