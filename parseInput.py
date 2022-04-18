@@ -3,6 +3,9 @@ import sys
 import re
 import logging
 from logging import handlers
+import os
+# silence TensorFlow, see https://stackoverflow.com/questions/40426502/is-there-a-way-to-suppress-the-messages-tensorflow-prints
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 import RunMachine as rm
 
 stage_re = re.compile('event(-hard)?|1[0-4]-[1-4]|[1-9]-[1-4]|([A-D]|SP)-[1-4]|T-[1-4]')
@@ -105,6 +108,9 @@ def parse_arguments(args):
     parser_b.add_argument('-he', '--heclp', action='store_true',
         help='Set a High-Efficiency Combat Logistics Plan for all clears.'
     )
+    parser_b.add_argument('-t', '--timeout', action='store_true',
+        help='Use the default_clear_time (defined in db.sql) instead of screenshot-polling for clearing stages.'
+    )
     parser_b.set_defaults(validate=validate_campaign_or_event, run=rm.run_battle)
     # hard - optional (flag)
     # qr - optional (flag, will Quick Retire blue and grays using existing settings)
@@ -134,7 +140,7 @@ def parse_arguments(args):
     )
 
     parser_d.add_argument('-s', '--sub', action='store_true',
-        help='Whether to do once-a-week Supply Line Disruption (defaults to False)'
+        help='Whether to try once-a-week Supply Line Disruption (defaults to False)'
     )
     parser_d.set_defaults(validate=validate_raid, run=rm.run_raid)
 
@@ -144,7 +150,7 @@ def main(args):
     options = parse_arguments(args)
     
     logger = logging.getLogger('al_state_machine')
-    rfh_handler = handlers.RotatingFileHandler('al_state_machine.log', encoding='utf-8')
+    rfh_handler = handlers.RotatingFileHandler('al_state_machine.log', maxBytes=1000000, backupCount=1, encoding='utf-8')
     
     if options.debug:
         logger.setLevel(logging.DEBUG)
@@ -161,9 +167,11 @@ def main(args):
     try:
         options.validate(options)
         options.run(options)
-    except (ValidationError, AttributeError) as e :
+    except ValidationError as e:
         print(e)
         return
+    except AttributeError:
+        print("Must run in one of the three modes <battle>, <cat>, or <raid>. Use -h for more details.")
 
 if __name__ == '__main__':
     main(sys.argv[1:])
