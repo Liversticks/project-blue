@@ -628,15 +628,16 @@ class StateMachine(Machine):
             coordinates = self.window.get_window_coordinates()
             image = self.sct.grab(coordinates)
             
+            can_predict = self.classifier.to_numpy(image)
+            self.status = self.classifier.predict(can_predict)
+            
             if self.debug:
                 now = datetime.datetime.now()
                 date_string = now.strftime(self.date_to_file_format)
-                filename = self.screenshot_directory + date_string + '.png'
+                filename = f'{self.screenshot_directory}{categories.categories[self.status]}/{date_string}.png'
                 mss.tools.to_png(image.rgb, image.size, output=filename)
                 self.logger.debug(f'Saved validation image in {self.screenshot_directory}')
 
-            can_predict = self.classifier.to_numpy(image)
-            self.status = self.classifier.predict(can_predict)
             self.timestamp = time.time()
             
         return self.status
