@@ -1,11 +1,16 @@
 from engines.BaseEngine import BaseEngine
+import time
 
 class UnexpectedStateError(Exception):
     pass
 
 class BattleEngine(BaseEngine):
     eventPrefixes = ['A', 'B', 'C', 'D', 'SP', 'T']
-    selectStage = 'SELECT is_hard, clear_time FROM stage WHERE stage = ?'
+    selectStage = 'SELECT is_hard, default_clear_time FROM stage WHERE stage = ?'
+    trackClearTime = 'INSERT INTO attempt_history (stage, end_time, clear_time) VALUES (?, ?, ?)'
+
+    def record_clear_time(self, stage, end_time, clear_time):
+        self.cursor.execute(self.trackClearTime, (stage, end_time, clear_time))
 
     def enter_normal_stage(self, fleet1, fleet2=None):
         self.machine.to_select_fleet()
@@ -15,8 +20,8 @@ class BattleEngine(BaseEngine):
             self.machine.set_surface_2(fleet=str(fleet2[0]))
         self.machine.set_roles()
     
-    def enter_first_stage(self, min_clear_time):
-        self.machine.enter_combat(min_clear_time=min_clear_time)
+    def enter_first_stage(self, default_clear_time):
+        self.machine.enter_combat(min_clear_time=default_clear_time)
     
     def finish_stage(self):
         while self.machine.state == 'combat':
@@ -29,18 +34,26 @@ class BattleEngine(BaseEngine):
         else:
             raise UnexpectedStateError
 
-    def clear_subsequent_stage(self, heclp=False):
+    nanoseconds_per_second = 1000000000
+
+    def clear_subsequent_stage(self, stage, heclp=False):
         if heclp:
             self.machine.set_heclp()
+        start_time = time.time_ns()
         self.machine.continue_stage()
         self.finish_stage()
+        end_time = time.time_ns()
+        self.record_clear_time(stage, end_time // self.nanoseconds_per_second, (end_time - start_time) // self.nanoseconds_per_second)
 
-    def clear_normal_stage(self, min_clear_time, iterations, heclp=False):
-        self.enter_first_stage(min_clear_time)
+    def clear_normal_stage(self, stage, default_clear_time, iterations, heclp=False):
+        start_time = time.time_ns()
+        self.enter_first_stage(default_clear_time)
         self.finish_stage()
+        end_time = time.time_ns()
+        self.record_clear_time(stage, end_time // self.nanoseconds_per_second, (end_time - start_time) // self.nanoseconds_per_second)
 
         for _ in range(iterations - 1):
-            self.clear_subsequent_stage(heclp=heclp)
+            self.clear_subsequent_stage(stage, heclp=heclp)
 
     def handle_EX_event(self, prefix):
         self.machine.to_SP()
@@ -77,9 +90,6 @@ class BattleEngine(BaseEngine):
                     self.machine.to_select_fleet()
                 else:
                     self.enter_normal_stage(str(options.fleet1[0]), options.fleet2)
-                self.clear_normal_stage(row['clear_time'], options.iterations, options.heclp)
-                self.machine.exit_stage()
-                self.machine.to_main_menu()
             else:
                 self.machine.to_battle()
                 self.machine.to_campaign()
@@ -87,11 +97,10 @@ class BattleEngine(BaseEngine):
                 for _ in range(int(prefix) - 1):
                     self.machine.next_chapter()
                 getattr(self.machine, f'enter_{stage_number}')()
-                # TODO: make passing in fleet2 less painful
                 self.enter_normal_stage(str(options.fleet1[0]), options.fleet2)
-                self.clear_normal_stage(row['clear_time'], options.iterations, options.heclp)
-                self.machine.exit_stage()
-                self.machine.to_main_menu()
+            self.clear_normal_stage(stage, row['default_clear_time'], options.iterations, options.heclp)
+            self.machine.exit_stage()
+            self.machine.to_main_menu()
 
     def cleanup(self):
         self.connection.close()
