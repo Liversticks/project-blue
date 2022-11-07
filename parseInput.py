@@ -43,10 +43,16 @@ def validate_surface_fleets(fleet1, fleet2, is_hard=False):
                 if fleet1[0] == fleet2[0]:
                     raise FleetsCannotBeSameError 
         
+def validate_shuffle(fleet2, shuffle):
+    if fleet2 is None:
+        return False
+    return shuffle
+
 def validate_campaign_or_event(args):
     try:
         args.split = validate_and_split_stages(args.stage)
         validate_surface_fleets(args.fleet1, args.fleet2)
+        args.shuffle = validate_shuffle(args.fleet2, args.shuffle)
     except InvalidStageError:
         print("The specified stage is invalid.")
         print("List of accepted stages:")
@@ -111,6 +117,10 @@ def parse_arguments(args):
     parser_b.add_argument('-t', '--timeout', action='store_true',
         help='Use the default_clear_time (defined in db.sql) instead of screenshot-polling for clearing stages.'
     )
+    parser_b.add_argument('-u', '--shuffle', action='store_true',
+        help='When -f2 is enabled, alternate f1 as escort fleet/f2 as boss fleet and vice versa.'
+    )
+    
     parser_b.set_defaults(validate=validate_campaign_or_event, run=rm.run_battle)
     # hard - optional (flag)
     # qr - optional (flag, will Quick Retire blue and grays using existing settings)

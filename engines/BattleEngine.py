@@ -18,42 +18,52 @@ class BattleEngine(BaseEngine):
         self.machine.set_surface_1(fleet=fleet1)
         if fleet2 is not None:
             self.machine.set_surface_2(fleet=str(fleet2[0]))
-        self.machine.set_roles()
+        self.machine.set_roles_main()
     
-    def enter_first_stage(self, default_clear_time):
-        self.machine.enter_combat(min_clear_time=default_clear_time)
-    
-    def finish_stage(self):
-        while self.machine.state == 'combat':
-            self.machine.finish_combat()
-        
-        if self.machine.state == 'stage-defeat':
-            self.machine.cleanup_defeat()
-        elif self.machine.state == 'stage-clear':
-            self.logger.info("Stage cleared.")
+    def do_battle(self, default_clear_time, useDefault):
+        if useDefault:
+            self.machine.default_time_clear(wait=default_clear_time)
         else:
-            raise UnexpectedStateError
+            self.machine.poll_clear()
+            while self.machine.state == 'combat-poll':
+                self.machine.poll_clear()
+            self.machine.finish_combat()
+            if self.machine.state == 'stage-defeat':
+                self.machine.cleanup_defeat()
+            elif self.machine.state == 'stage-clear':
+                self.logger.info("Stage cleared.")
+            else:
+                raise UnexpectedStateError
+        assert (self.machine.state == 'stage-clear')
 
     nanoseconds_per_second = 1000000000
 
-    def clear_subsequent_stage(self, stage, heclp=False):
+    def clear_subsequent_stage(self, stage, default_clear_time, useDefault, heclp=False, shuffle=False):
+        if shuffle:
+            print()
+            # exit to chapter (from stage)
+            # renter stage (from stage)
+            # set_roles_alt
+        
         if heclp:
             self.machine.set_heclp()
         start_time = time.time_ns()
         self.machine.continue_stage()
-        self.finish_stage()
+        self.do_battle(default_clear_time, useDefault)
         end_time = time.time_ns()
-        self.record_clear_time(stage, end_time // self.nanoseconds_per_second, (end_time - start_time) // self.nanoseconds_per_second)
+        if not useDefault:
+            self.record_clear_time(stage, end_time // self.nanoseconds_per_second, (end_time - start_time) // self.nanoseconds_per_second)
 
-    def clear_normal_stage(self, stage, default_clear_time, iterations, heclp=False):
+    def clear_normal_stage(self, stage, default_clear_time, iterations, heclp=False, useDefault=False):
         start_time = time.time_ns()
-        self.enter_first_stage(default_clear_time)
-        self.finish_stage()
+        self.machine.enter_combat()
+        self.do_battle(default_clear_time, useDefault)
         end_time = time.time_ns()
-        self.record_clear_time(stage, end_time // self.nanoseconds_per_second, (end_time - start_time) // self.nanoseconds_per_second)
+        if not useDefault:
+            self.record_clear_time(stage, end_time // self.nanoseconds_per_second, (end_time - start_time) // self.nanoseconds_per_second)
 
         for _ in range(iterations - 1):
-            self.clear_subsequent_stage(stage, heclp=heclp)
+            self.clear_subsequent_stage(stage, default_clear_time, useDefault, heclp=heclp)
 
     def handle_EX_event(self, prefix):
         self.machine.to_SP()
@@ -98,7 +108,7 @@ class BattleEngine(BaseEngine):
                     self.machine.next_chapter()
                 getattr(self.machine, f'enter_{stage_number}')()
                 self.enter_normal_stage(str(options.fleet1[0]), options.fleet2)
-            self.clear_normal_stage(stage, row['default_clear_time'], options.iterations, options.heclp)
+            self.clear_normal_stage(stage, row['default_clear_time'], options.iterations, heclp=options.heclp, useDefault=options.timeout)
             self.machine.exit_stage()
             self.machine.to_main_menu()
 

@@ -7,12 +7,13 @@ import logging
 from transitions import Machine
 
 class StateMachine(Machine):
-    def __init__(self, debug, window, sct):
+    def __init__(self, debug, window, sct, screenshot_threshold=30):
         self.classifier = keras_predict.Classifier()
         self.debug = debug
         self.logger = logging.getLogger('al_state_machine.operations')
         self.window = window
         self.sct = sct
+        self.screenshot_threshold = screenshot_threshold
 
         states = [
             'disconnected',
@@ -64,6 +65,8 @@ class StateMachine(Machine):
             # Fleet selection (normal stages only)
             'select-fleet',
             'combat',
+            'combat-poll',
+            'combat-done',
             'stage-clear',
             'stage-defeat',
             # Exercises
@@ -234,6 +237,7 @@ class StateMachine(Machine):
             { 'trigger': 'enter_1', 'source': ['chapter-normal-13'], 'dest': 'enter-stage', 'before': 'enter_13_1' },
             { 'trigger': 'enter_2', 'source': ['chapter-normal-13'], 'dest': 'enter-stage', 'before': 'enter_13_2' },
             { 'trigger': 'enter_3', 'source': ['chapter-normal-13'], 'dest': 'enter-stage', 'before': 'enter_13_3' },
+            { 'trigger': 'enter_4', 'source': ['chapter-normal-13'], 'dest': 'enter-stage', 'before': 'enter_13_4' },
             # Event stages
             { 'trigger': 'to_SP', 'source': 'current-event-*', 'dest': 'current-event-SP', 'before': 'event_to_SP' },
             { 'trigger': 'to_D', 'source': 'current-event-SP', 'dest': 'current-event-D', 'before': 'event_to_SP' },
@@ -266,13 +270,18 @@ class StateMachine(Machine):
             { 'trigger': 'set_surface_2', 'source': 'select-fleet', 'dest': None, 'before': 'set_surface_2_fleet' },
             { 'trigger': 'set_sub', 'source': 'select-fleet', 'dest': None, 'before': 'set_sub_fleet' },
             { 'trigger': 'clear_2', 'source': 'select-fleet', 'dest': None, 'before': 'clear_2_fleet' },
-            { 'trigger': 'set_roles', 'source': 'select-fleet', 'dest': None, 'before': 'set_fleet_roles' },
+            { 'trigger': 'set_roles_main', 'source': 'select-fleet', 'dest': None, 'before': 'set_fleet_roles_main' },
+            { 'trigger': 'set_roles_alt', 'source': 'select-fleet', 'dest': None, 'before': 'set_fleet_roles_alt' },
             { 'trigger': 'toggle_heclp', 'source': 'select-fleet', 'dest': None, 'before': 'toggle_heclp_start' },
             { 'trigger': 'enter_combat', 'source': 'select-fleet', 'dest': 'combat', 'before': 'start_stage' },
             # TODO: some way to detect whether we finish in Normal or Hard Mode
-            { 'trigger': 'finish_combat', 'source': 'combat', 'dest': 'stage-clear', 'conditions': 'successful_clear' },
-            { 'trigger': 'finish_combat', 'source': 'combat', 'dest': 'stage-defeat', 'conditions': 'defeated' },
-            { 'trigger': 'finish_combat', 'source': 'combat', 'dest': None, 'conditions': 'not_clear_yet', 'before': 'wait_interval' },
+            # For default_time_clear, avoid using the screenshot engine
+            { 'trigger': 'default_time_clear', 'source': 'combat', 'dest': 'stage-clear', 'before': 'wait_default' },
+            { 'trigger': 'poll_clear', 'source': 'combat', 'dest': 'combat-poll' },
+            { 'trigger': 'poll_clear', 'source': 'combat-poll', 'dest': None, 'conditions': 'not_clear_yet', 'before': 'wait_interval' },
+            { 'trigger': 'poll_clear', 'source': 'combat-poll', 'dest': 'combat-done', 'unless': 'not_clear_yet' },
+            { 'trigger': 'finish_combat', 'source': 'combat-done', 'dest': 'stage-clear', 'conditions': 'successful_clear' },
+            { 'trigger': 'finish_combat', 'source': 'combat-done', 'dest': 'stage-defeat', 'conditions': 'defeated' },
             { 'trigger': 'set_heclp', 'source': 'stage-clear', 'dest': None, 'before': 'set_another_heclp' },
             { 'trigger': 'continue_stage', 'source': 'stage-clear', 'dest': 'combat', 'before': 'go_continue_stage' },
             { 'trigger': 'exit_stage', 'source': 'stage-clear', 'dest': 'chapter-normal-*', 'before': 'go_exit_stage' },
@@ -576,6 +585,10 @@ class StateMachine(Machine):
         TwoKeyCombo('LSHIFT', '0')
         self.logger.debug('Selected stage 13-3')
 
+    def enter_13_4(self, event):
+        TwoKeyCombo('LSHIFT', '3')
+        self.logger.debug('Selected stage 13-4')
+
     def go_select_fleet(self, event):
         KeyPress('G')
         self.logger.debug('Moved from stage info to fleet selection')
@@ -603,10 +616,15 @@ class StateMachine(Machine):
         TwoKeyCombo('LSHIFT', 'C')
         self.logger.debug('Cleared second surface fleet')
 
-    def set_fleet_roles(self, event):
+    def set_fleet_roles_main(self, event):
         KeyPress('O')
         time.sleep(1)
         self.logger.debug('Set first fleet to escorts, second fleet to bosses, and submarine fleet to always engage')
+
+    def set_fleet_roles_alt(self, event):
+        KeyPress('N')
+        time.sleep(1)
+        self.logger.debug('Set first fleet to bosses and second fleet to escorts')
 
     def toggle_heclp_start(self, event):
         KeyPress('P')
@@ -614,13 +632,14 @@ class StateMachine(Machine):
 
     date_to_file_format = '%Y-%m-%d %H_%M_%S'
     screenshot_directory = './screenshots/'
-    screenshot_threshold = 30
 
-    def wait_interval(self):
+    def wait_default(self, event):
+        wait = event.kwargs.get('wait', 300)
+        self.logger.debug(f'Begin default wait of {wait} seconds')
+        time.sleep(wait)
+
+    def wait_interval(self, event):
         time.sleep(self.screenshot_threshold)
-        current = time.time()
-        if current - self.start_time < self.min_clear_time:
-            time.sleep(self.min_clear_time - (current - self.timestamp))
 
     def predict_and_screenshot(self):
         current = time.time()
@@ -644,10 +663,8 @@ class StateMachine(Machine):
     
     def start_stage(self, event):
         KeyPress('ENTER')
-        self.min_clear_time = event.kwargs.get('min_clear_time', 60)
         self.status = 6
         self.timestamp = time.time()
-        self.start_time = self.timestamp
         self.logger.debug('Started stage')
 
     def successful_clear(self, event):
@@ -667,7 +684,7 @@ class StateMachine(Machine):
             return False
 
     def not_clear_yet(self, event):
-        return (not self.successful_clear(event)) and self.defeated(event) 
+        return (not self.successful_clear(event)) and (not self.defeated(event)) 
 
     def go_exit_stage(self, event):
         time.sleep(2)
@@ -721,7 +738,7 @@ class StateMachine(Machine):
 
     def is_event_SP(self, event):
         # TODO: DB flags based on event timing
-        return False
+        return True
 
     def enter_BD_3(self, event):
         TwoKeyCombo('LSHIFT', '0')

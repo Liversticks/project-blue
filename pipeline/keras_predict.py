@@ -21,6 +21,7 @@ class Classifier():
 
     def predict(self, image):
         category_predictions = self.model.predict(image)
+        self.logger.debug(category_predictions)
         result = category_predictions.argmax()
         self.logger.info(f"Prediction: {result} ({cd.categories[result]})")
         return result

@@ -29,14 +29,14 @@
 - Shift + Z: Toggle Normal/Hard Mode
 - Shift + 1: 1-1, 3-2, 4-2, 7-1, 9-2, 12-2, 13-2
 - Shift + 2: 1-2, 2-3, 3-1, 6-3, 8-1, 9-1, 10-1, 11-1, 12-1, 13-1, current A1/C1
-- Shift + 3: 1-3, 4-3, 5-2, 6-1, 9-4, 10-3, 12-3
+- Shift + 3: 1-3, 4-3, 5-2, 6-1, 9-4, 10-3, 12-3, 13-4
 - Shift + 4: 1-4, 2-2, 3-3, 7-2, 11-3
 - Shift + 5: 2-1, 7-4, 8-4, 11-4
 - Shift + 6: 2-4, 8-3, 11-2
 - Shift + 7: 3-4, 4-4, 5-3, 6-2
 - Shift + 8: 4-1, 5-1, 8-2
 - Shift + 9: 6-4, 10-2
-- Shift + 0: 7-3, 9-3, 10-4, 12-4, 13-3, current A3/C3
+- Shift + 0: 7-3, 9-3, 10-4, 12-4, 13-3, current A3/C3, Virtual Tower SP4
 - Shift + A:
 - Shift + B:
 - Unassigned: 5-4
@@ -54,6 +54,7 @@
 - 7: Choose fleet 4 (surface 2)
 - 8: Choose fleet 5 (surface 2)
 - 9: Choose fleet 6 (surface 2)
+- N: Assign boss to Fleet 1 and mobbing to Fleet 2
 - O: Assign mobbing to Fleet 1 and boss to Fleet 2
 - P: Toggle High Efficiency Combat Logistics Plan in fleet selection
 - SHIFT + P: Use a HECLP for further clears
