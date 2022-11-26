@@ -5,7 +5,7 @@ class UnexpectedStateError(Exception):
     pass
 
 class BattleEngine(BaseEngine):
-    eventPrefixes = ['A', 'B', 'C', 'D', 'SP', 'T']
+    eventPrefixes = ['A', 'B', 'C', 'D', 'SP', 'T', 'TH']
     selectStage = 'SELECT is_hard, default_clear_time FROM stage WHERE stage = ?'
     trackClearTime = 'INSERT INTO attempt_history (stage, end_time, clear_time) VALUES (?, ?, ?)'
 
@@ -91,8 +91,11 @@ class BattleEngine(BaseEngine):
             
             if prefix in self.eventPrefixes:
                 self.machine.to_event()
-                if prefix == 'T':
+                if prefix.startswith('T'):
                     self.machine.to_T()
+                    if (prefix == 'TH'):
+                        self.machine.to_SP()
+                        self.machine.to_TH()
                 elif prefix != 'SP':
                     self.handle_EX_event(prefix)    
                 getattr(self.machine, f'enter_{stage_number}')()

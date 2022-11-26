@@ -102,5 +102,12 @@ INSERT INTO stage (is_hard, stage, default_clear_time) VALUES
     --from World-Spanning Arclight
     (false, 'T-1', 120 * 5),
     (false, 'T-2', 120 * 5),
-    (false, 'T-3', 120 * 6),
-    (false, 'T-4', 120 * 6);
+    (false, 'T-3', 120 * 5),
+    (false, 'T-4', 120 * 5),
+    (false, 'T-5', 120 * 5),
+    --from Alchemist and the Archipegalo of Secrets
+    (false, 'TH-1', 120 * 5),
+    (false, 'TH-2', 120 * 5),
+    (false, 'TH-3', 120 * 5),
+    (false, 'TH-4', 120 * 5),
+    (false, 'TH-5', 120 * 5);    

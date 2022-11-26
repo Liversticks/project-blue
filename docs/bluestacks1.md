@@ -37,7 +37,7 @@
 - Shift + 8: 4-1, 5-1, 8-2
 - Shift + 9: 6-4, 10-2
 - Shift + 0: 7-3, 9-3, 10-4, 12-4, 13-3, current A3/C3, Virtual Tower SP4
-- Shift + A:
+- Shift + A: Atelier T2
 - Shift + B:
 - Unassigned: 5-4
 - G: Go to Fleet Selection

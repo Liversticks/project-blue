@@ -8,7 +8,7 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 import RunMachine as rm
 
-stage_re = re.compile('event(-hard)?|1[0-4]-[1-4]|[1-9]-[1-4]|([A-D]|SP)-[1-4]|T-[1-4]')
+stage_re = re.compile('event(-hard)?|1[0-4]-[1-4]|[1-9]-[1-4]|([A-D]|SP)-[1-4]|TH?-[1-5]')
 
 class InvalidStageError(Exception): pass
 

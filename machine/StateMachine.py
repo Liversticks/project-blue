@@ -50,6 +50,7 @@ class StateMachine(Machine):
             'chapter-hard-9',
             'chapter-hard-10',
             'chapter-hard-11',
+            'chapter-hard-12',
             # Event "chapters"
             'current-event-*',
             'current-event-A',
@@ -59,6 +60,7 @@ class StateMachine(Machine):
             'current-event-SP',
             'current-event-EX',
             'current-event-T',
+            'current-event-TH',
             # All stages (Clearing mode must be on and Auto-Search must be enabled!)
             'enter-stage',
             'enter-stage-hard',
@@ -140,6 +142,8 @@ class StateMachine(Machine):
                 'chapter-hard-9',
                 'chapter-hard-10',
                 'chapter-hard-11',
+                'chapter-hard-12',
+                'current-event-*',
                 'daily-raids-a',
                 'daily-raids-t',
                 'daily-raids-f',
@@ -239,12 +243,13 @@ class StateMachine(Machine):
             { 'trigger': 'enter_3', 'source': ['chapter-normal-13'], 'dest': 'enter-stage', 'before': 'enter_13_3' },
             { 'trigger': 'enter_4', 'source': ['chapter-normal-13'], 'dest': 'enter-stage', 'before': 'enter_13_4' },
             # Event stages
-            { 'trigger': 'to_SP', 'source': 'current-event-*', 'dest': 'current-event-SP', 'before': 'event_to_SP' },
+            { 'trigger': 'to_SP', 'source': ['current-event-*', 'current-event-T'], 'dest': 'current-event-SP', 'before': 'event_to_SP' },
             { 'trigger': 'to_D', 'source': 'current-event-SP', 'dest': 'current-event-D', 'before': 'event_to_SP' },
             { 'trigger': 'to_B', 'source': 'current-event-SP', 'dest': 'current-event-B', 'before': 'hard_mode_toggle' },
             { 'trigger': 'to_C', 'source': 'current-event-D', 'dest': 'current-event-C', 'before': 'to_previous_chapter' },
             { 'trigger': 'to_A', 'source': 'current-event-B', 'dest': 'current-event-A', 'before': 'to_previous_chapter' },
             { 'trigger': 'to_T', 'source': 'current-event-*', 'dest': 'current-event-T', 'before': 'event_to_T' },
+            { 'trigger': 'to_TH', 'source': 'current-event-SP', 'dest': 'current-event-TH', 'before': 'event_to_SP' },
             { 'trigger': 'enter_1', 'source': ['current-event-A', 'current-event-C'], 'dest': 'enter-stage', 'before': 'enter_AC_1' },
             { 'trigger': 'enter_2', 'source': ['current-event-A', 'current-event-C'], 'dest': 'enter-stage', 'before': 'enter_AC_2' },
             { 'trigger': 'enter_3', 'source': ['current-event-A', 'current-event-C'], 'dest': 'enter-stage', 'before': 'enter_AC_3' },
@@ -261,6 +266,12 @@ class StateMachine(Machine):
             { 'trigger': 'enter_2', 'source': 'current-event-T', 'dest': 'enter-stage', 'before': 'enter_T_2', 'conditions': 'is_event_T' },
             { 'trigger': 'enter_3', 'source': 'current-event-T', 'dest': 'enter-stage', 'before': 'enter_T_3', 'conditions': 'is_event_T' },
             { 'trigger': 'enter_4', 'source': 'current-event-T', 'dest': 'enter-stage', 'before': 'enter_T_4', 'conditions': 'is_event_T' },
+            { 'trigger': 'enter_5', 'source': 'current-event-T', 'dest': 'enter-stage', 'before': 'enter_T_5', 'conditions': 'is_event_T' },
+            { 'trigger': 'enter_1', 'source': 'current-event-TH', 'dest': 'enter-stage', 'before': 'enter_T_1', 'conditions': 'is_event_T' },
+            { 'trigger': 'enter_2', 'source': 'current-event-TH', 'dest': 'enter-stage', 'before': 'enter_T_2', 'conditions': 'is_event_T' },
+            { 'trigger': 'enter_3', 'source': 'current-event-TH', 'dest': 'enter-stage', 'before': 'enter_T_3', 'conditions': 'is_event_T' },
+            { 'trigger': 'enter_4', 'source': 'current-event-TH', 'dest': 'enter-stage', 'before': 'enter_T_4', 'conditions': 'is_event_T' },
+            { 'trigger': 'enter_5', 'source': 'current-event-TH', 'dest': 'enter-stage', 'before': 'enter_T_5', 'conditions': 'is_event_T' },
             # TODO: War Archive stages
             
             # Normal mode fleet selection
@@ -757,23 +768,26 @@ class StateMachine(Machine):
 
     def is_event_T(self, event):
         # figure out later
-        return False
+        return True
 
     def event_to_T(self, event):
         for _ in range(2):
             self.to_previous_chapter(event)
     
     def enter_T_1(self, event):
-        TwoKeyCombo('LSHIFT', 'Q')
+        TwoKeyCombo('LSHIFT', '7')
 
     def enter_T_2(self, event):
-        TwoKeyCombo('LSHIFT', 'O')
+        TwoKeyCombo('LSHIFT', 'A')
 
     def enter_T_3(self, event):
-        TwoKeyCombo('LSHIFT', 'N')
+        TwoKeyCombo('LSHIFT', 'Q')
 
     def enter_T_4(self, event):
-        TwoKeyCombo('LSHIFT', 'M')
+        TwoKeyCombo('LSHIFT', '6')
+
+    def enter_T_5(self, event):
+        TwoKeyCombo('LSHIFT', 'R')
 
     def to_daily_raids_list(self, event):
         KeyPress('D')
