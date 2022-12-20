@@ -242,6 +242,7 @@ class StateMachine(Machine):
             { 'trigger': 'enter_2', 'source': ['chapter-normal-13'], 'dest': 'enter-stage', 'before': 'enter_13_2' },
             { 'trigger': 'enter_3', 'source': ['chapter-normal-13'], 'dest': 'enter-stage', 'before': 'enter_13_3' },
             { 'trigger': 'enter_4', 'source': ['chapter-normal-13'], 'dest': 'enter-stage', 'before': 'enter_13_4' },
+            { 'trigger': 'enter_1', 'source': ['chapter-normal-14'], 'dest': 'enter-stage', 'before': 'enter_14_1' },
             # Event stages
             { 'trigger': 'to_SP', 'source': ['current-event-*', 'current-event-T'], 'dest': 'current-event-SP', 'before': 'event_to_SP' },
             { 'trigger': 'to_D', 'source': 'current-event-SP', 'dest': 'current-event-D', 'before': 'event_to_SP' },
@@ -599,6 +600,10 @@ class StateMachine(Machine):
     def enter_13_4(self, event):
         TwoKeyCombo('LSHIFT', '3')
         self.logger.debug('Selected stage 13-4')
+
+    def enter_14_1(self, event):
+        TwoKeyCombo('LSHIFT', '2')
+        self.logger.debug('Selected stage 14-1')
 
     def go_select_fleet(self, event):
         KeyPress('G')
